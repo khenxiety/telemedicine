@@ -1,0 +1,53 @@
+nz-date-picker,
+nz-range-picker {
+  margin: 0 8px 0 0;
+}
+
+.icon-refresh{
+    font-size: 20px;
+}
+header{
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background-color: white;
+}
+.filter{
+    display: flex;
+    flex-direction: column;
+    label{
+        
+        font-size: 13px;
+    }
+}
+.reload-btn{
+    padding-block: 5px;
+
+
+    &.disabled{
+        
+        color: #666666;
+        pointer-events: none;
+        animation: spin 1s infinite ;
+    }
+}
+.table-loader {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 30px 50px;
+    margin: 20px 0;
+  }
+
+
+  @keyframes spin {
+    from{
+        transform: rotate(0);
+    }
+    to{
+        transform: rotate(360deg);
+
+    }
+    
+  }

@@ -1,0 +1,30 @@
+.cards {
+  min-height: 160px;
+  position: relative;
+
+  .description {
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .details {
+    .details-text {
+      font-size: 1.3em;
+    }
+  }
+
+  &.filled {
+    background-color: var(--primary);
+  }
+}
+.round {
+  border-radius: 10px;
+}
+.border-grn {
+  border: 2px solid var(--primary);
+}
+.description-text {
+  font-size: 1.125em;
+}

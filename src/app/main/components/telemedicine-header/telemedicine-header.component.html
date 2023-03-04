@@ -1,0 +1,30 @@
+<header  (scroll)="onscroll()" [ngClass]="navScroll || currentRoute=='/search' ? 'colored shadow': ''">
+  <div class="container">
+    <div class="nav w-100">
+      <div class="logo d-flex align-items-center">
+        <a href="" class="d-flex align-items-center"
+          ><img
+            src="./assets/logo.png"
+            height="60"
+            width="60"
+            alt=""
+            class="me-2"
+          />
+
+          <span>TELEMEDICINE</span></a
+        >
+      </div>
+
+      <ul *ngIf="currentRoute != '/details'">
+        <li
+          *ngFor="let element of headerElement"
+          class="me-4"
+          [routerLink]="element.route"
+          routerLinkActive="active"
+        >
+          <a [routerLink]="element.route">{{ element.title }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

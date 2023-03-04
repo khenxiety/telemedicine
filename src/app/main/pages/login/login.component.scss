@@ -1,0 +1,143 @@
+.round {
+  border-radius: 8px;
+}
+.ant-btn-primary {
+  color: #fff;
+  border:none;
+  border-color: none;
+  background: linear-gradient(to right, #3864b3,#2f5597);
+  height: 52px;
+  &:hover{
+    background: linear-gradient(to right, #3864b3,#3864b3) ;
+
+  }
+}
+
+.page-wrapper {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  // padding-top: -30px;
+  padding-top: 75px;
+  position: relative;
+
+  .container {
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+   justify-content: center;
+    .card{
+
+      border: 1px solid var(--primary);
+      border-radius: 70px;
+      .text-container {
+        h2 {
+          font-weight: 1000;
+          font-size: 3.6em;
+          margin-bottom: 10px;
+          font-family: "Poppins", sans-serif;
+  
+        }
+        p {
+          font-size: 1.5em;
+          font-weight: 600px;
+        }
+      }
+      .button-ggl {
+        color: #767676;
+        font-size: 1.1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 51px;
+        font-weight: 600;
+  
+        &.primary {
+          color: white;
+        }
+      }
+
+   
+      .inputs {
+        height: 40px;
+        border-radius: 10px;
+      }
+
+    }
+
+
+    
+    
+
+    
+    .hero-logo {
+      // margin-left: 54px;
+    }
+
+    
+  }
+}
+.section-2{
+  h1{
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-size: 3.5em;
+  }
+}
+
+.contact-section{
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  .contact-list{
+
+    list-style: none;
+    padding: 0;
+
+    li{
+
+      display: flex;
+      align-items:center ;
+
+      margin-bottom: 60px;
+      
+      span{
+        margin-right: 40px;
+        font-size: 45px;
+
+        color: var(--primary);
+      }
+
+      .text-content{
+        h4{
+          font-weight: 700;
+          font-size: 30px;
+        }
+        p{
+          font-size: 18px;
+          font-weight: 500;
+
+          color: var(--secondary);
+        }
+      }
+    }
+  }
+
+  .contact-card{
+    border-radius: 70px;
+    border: none;
+    background-color: #f2f2f2;
+    z-index: 1;
+
+  }
+
+  .img{
+    position: absolute;
+    bottom: 0;
+    height: 20%;
+    width: 100%;
+    z-index: -1;
+  }
+}

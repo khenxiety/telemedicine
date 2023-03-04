@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "telemedicine-3ca8d": {
+      "hosting": {
+        "frontend": [
+          "telemedicine-3ca8d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "telemedicine-3ca8d"
+  }
+}

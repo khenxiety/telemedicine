@@ -1,0 +1,102 @@
+<nz-layout>
+  <nz-header>
+    <div class="header-container">
+      <div class="logo-container">
+        <img
+            src="./assets/logo.png"
+           
+            alt=""
+            class="logo me-2"
+          />
+          <span class="text-white">TELEMEDICINE</span>
+        </div>
+
+
+      <a nz-dropdown [nzDropdownMenu]="menu">
+        Admin
+        <span nz-icon nzType="down"></span>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>
+            <span
+              class="margin-r-sm me-2"
+              nz-icon
+              nzType="eye"
+              nzTheme="outline"
+            ></span
+            >Password Reset
+          </li>
+          <li nz-menu-item (click)="logout()">
+            <span
+              class="margin-r-sm me-2"
+              nz-icon
+              nzType="logout"
+              nzTheme="outline"
+            ></span
+            >Logout
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </nz-header>
+  <nz-content class="outer-content">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+      <nz-breadcrumb-item>List</nz-breadcrumb-item>
+      <nz-breadcrumb-item>App</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <nz-layout class="inner-layout">
+      <nz-sider nzWidth="200px" nzTheme="light">
+        <ul nz-menu nzMode="inline" class="sider-menu">
+          <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="user">
+            <ul>
+              <li
+                nz-menu-item
+                routerLink="./dashboard"
+                routerLinkActive="ant-menu-item-selected"
+              >
+                Analytics
+              </li>
+              <li
+                nz-menu-item
+                routerLink="./manage"
+                routerLinkActive="ant-menu-item-selected"
+              >
+                Manage Data
+              </li>
+              <li
+                nz-menu-item
+                routerLink="./submits"
+                routerLinkActive="ant-menu-item-selected"
+              >
+                Manage Accounts
+              </li>
+            </ul>
+          </li>
+          <li nz-submenu nzTitle="CMS" nzIcon="laptop">
+            <ul>
+              <li nz-menu-item>option5</li>
+              <li nz-menu-item>option6</li>
+              <li nz-menu-item>option7</li>
+              <li nz-menu-item>option8</li>
+            </ul>
+          </li>
+          <!-- <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
+            <ul>
+              <li nz-menu-item>option9</li>
+              <li nz-menu-item>option10</li>
+              <li nz-menu-item>option11</li>
+              <li nz-menu-item>option12</li>
+            </ul>
+          </li> -->
+        </ul>
+      </nz-sider>
+      <nz-content class="inner-content">
+        <router-outlet></router-outlet>
+
+      </nz-content>
+    </nz-layout>
+    <nz-footer>Telemedicine ©{{year}}</nz-footer>
+  </nz-content>
+</nz-layout>

@@ -1,0 +1,148 @@
+<app-img-bg></app-img-bg>
+<div class="page-wrapper section-1">
+
+  <div class="container" style="min-height: calc(100vh - 30px) ;">
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-sm-12">
+        <div class="card px-5 py-5">
+          <form action="">
+            <div class="mb-2 text-container">
+              <h2 class="font-color-primary h2-responsive">Log<span class="font-color-secondary">in</span> </h2>
+              <p class="font-color-primary">Don’t have an account yet? <a href="" class="font-color-secondary">Sign
+                  up</a></p>
+            </div>
+            <div class="mb-2">
+              <button nz-button class="button-ggl round" nzBlock>
+                <!-- <span nz-icon nzType="google" nzTheme="outline"></span> -->
+                <img class="me-2" height="auto" width="30" src="./assets/google.png" alt="" />
+                Login with Google
+              </button>
+            </div>
+            <div class="mb-2">
+              <nz-divider class="font-color-primary" nzPlain nzText="or"></nz-divider>
+            </div>
+            <div class="mb-2">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your email!">
+                  <nz-input-group nzPrefixIcon="mail">
+                    <input class="inputs round" type="text" nz-input placeholder="Email" />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="mb-2">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please input your Password!">
+                  <nz-input-group nzPrefixIcon="lock">
+                    <input class="inputs round" type="password" nz-input placeholder="Password" />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="mb-2">
+              <button class="button-ggl primary round" nzType="primary" nz-button nzBlock>
+                Login with email
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-12 d-flex align-items-center">
+        <img class="hero-logo" width="100%" height="auto" src="./assets/login logo.png" alt="" />
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<div class="section-2">
+  <div class="row w-100">
+    <div class="col-12 text-center">
+      <h1 class=" font-color-primary">BRINGING YOUR <span class="font-color-secondary">DIAGNOSTIC <br>
+          NEEDS</span> AT YOUR REACH
+      </h1>
+      <button class="button-ggl round" nzType="primary" nz-button>
+        Learn More
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="contact-section py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-6 d-flex align-items-center">
+
+        <ul class="contact-list">
+          <li><span nz-icon nzType="environment" nzTheme="fill"></span>
+            <div class="text-content">
+              <h4 class="font-color-primary h4-responsive">Address</h4>
+              <p class="m-0">Batangas State University</p>
+
+            </div>
+          </li>
+          <li><span nz-icon nzType="phone" nzTheme="fill"></span>
+            <div class="text-content">
+              <h4 class="font-color-primary h4-responsive">Phone</h4>
+              <p class="m-0">09362173627</p>
+
+            </div>
+          </li>
+
+          <li><span nz-icon nzType="mail" nzTheme="fill"></span>
+            <div class="text-content">
+              <h4 class="font-color-primary h4-responsive">Email</h4>
+              <p class="m-0">telemedicine@yahoo.com</p>
+
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+
+
+      <div class="col-6">
+        <div class="card contact-card px-5 py-5">
+          <form action="" class="contact-form">
+            <div class="mb-4 text-container text-center">
+              <h3 class="font-color-primary h3-responsive">LEAVE US A <span class="font-color-secondary">MESSAGE</span>
+              </h3>
+            </div>
+            <div class="mb-2">
+
+              <app-telemedicine-input [placeholder]="'Enter your name'" [errorMessage]="'Please provide a name'"
+                [icon]="'mail'" [type]="'text'" [isRound]="true">
+              </app-telemedicine-input>
+            </div>
+            <div class="mb-2">
+              <app-telemedicine-input [placeholder]="'Enter your email'" [errorMessage]="'Please input your email'"
+                [icon]="'mail'" [type]="'text'" [isRound]="true">
+              </app-telemedicine-input>
+
+            </div>
+            <div class="mb-2">
+              <app-telemedicine-input [placeholder]="'Enter subject'" [errorMessage]="'Please input a subject'"
+                [icon]="'mail'" [type]="'text'" [isRound]="true">
+              </app-telemedicine-input>
+            </div>
+            <div class="mb-2">
+              <app-telemedicine-text-area [errorMessage]="'Please provide a message'"
+                [placeholder]="'Enter your message'"></app-telemedicine-text-area>
+            </div>
+            <div class="mb-2">
+              <button class="button-ggl primary round" nzType="primary" nz-button nzBlock>
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <img src="./assets/waves footer 2.png" alt="" class="img disable-user-select" />
+
+</div>

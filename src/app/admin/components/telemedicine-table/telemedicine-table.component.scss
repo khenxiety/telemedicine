@@ -1,0 +1,29 @@
+// nz-spin{
+// height: 400px;
+// }
+
+.ant-table-column-title{
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+
+
+
+td{
+
+    p{
+
+        ::ng-deep .ant-typography-copy{
+            opacity: 0;
+        }
+
+        &:hover{
+            ::ng-deep .ant-typography-copy{
+                opacity: 1;
+            }
+        }
+    }
+    
+        
+}

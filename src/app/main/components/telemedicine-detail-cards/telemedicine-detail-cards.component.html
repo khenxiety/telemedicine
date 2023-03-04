@@ -1,0 +1,37 @@
+<nz-card
+  class="shadow round border-grn cards"
+  [class.filled]="filled"
+  *ngIf="!isWideCard"
+>
+  <div class="row details">
+    <div class="col">
+      <img [src]="imgURL" height="60" width="60" alt="" />
+    </div>
+    <div class="col">
+      <strong [ngClass]="filled ? 'details-text text-white' : 'details-text'">{{
+        data
+      }}</strong>
+    </div>
+  </div>
+  <div class="row description">
+    <div class="col text-center">
+      <strong
+        [ngClass]="filled ? 'description-text text-white' : 'description-text'"
+        >{{ description }}</strong
+      >
+    </div>
+  </div>
+</nz-card>
+
+<nz-card class="shadow round border-grn w-100" *ngIf="isWideCard">
+  <strong class="description-text">{{ description }}</strong>
+  <div class="card-image">
+    <img
+      [src]="imgURL"
+      height="auto"
+      width="100%"
+      style="object-fit: cover"
+      alt=""
+    />
+  </div>
+</nz-card>

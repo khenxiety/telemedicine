@@ -1,0 +1,148 @@
+<div class="page-wrapper">
+  <div class="container">
+    <div class="row pt-5">
+      <div class="col-lg-8">
+        <div class="container-header">
+          <div class="mb-4">
+            <h2 class="header-text h2-responsive font-color-primary">PATIENT <span class="font-color-secondary">DETAILS</span> </h2>
+          </div>
+          <div class="mb-5">
+            <div class="date-picker">
+              <nz-date-picker
+                style="min-width: 300px"
+                [(ngModel)]="date"
+                (ngModelChange)="onChange($event)"
+              ></nz-date-picker>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-cards pt-3">
+          <div class="row mb-5">
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <app-telemedicine-detail-cards
+                [imgURL]="'./assets/temperature.png'"
+                [data]="'36 deg'"
+                [filled]="false"
+                [description]="'Temperature'"
+                [isWideCard]="false"
+              ></app-telemedicine-detail-cards>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <app-telemedicine-detail-cards
+                [imgURL]="'./assets/heart.png'"
+                [data]="'36 deg'"
+                [filled]="false"
+                [description]="'Heart Rate'"
+                [isWideCard]="false"
+              ></app-telemedicine-detail-cards>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <app-telemedicine-detail-cards
+                [imgURL]="'./assets/blood.png'"
+                [data]="'36 deg'"
+                [filled]="true"
+                [description]="'Blood Pressure'"
+                [isWideCard]="false"
+              ></app-telemedicine-detail-cards>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <app-telemedicine-detail-cards
+                [imgURL]="'./assets/ox2.png'"
+                [data]="'36 deg'"
+                [filled]="false"
+                [description]="'Oxygen Saturation'"
+                [isWideCard]="false"
+              ></app-telemedicine-detail-cards>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col">
+              <app-telemedicine-detail-cards
+                [imgURL]="'./assets/heartECG.jpg'"
+                [data]="'36 deg'"
+                [filled]="false"
+                [description]="'Heart ECG'"
+                [isWideCard]="true"
+              ></app-telemedicine-detail-cards>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <button nz-button nzType="primary">Print Summary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="row mb-5">
+          <div class="col">
+            <div class="search-input">
+              <nz-input-group [nzSuffix]="suffixIconSearch">
+                <input type="text" nz-input placeholder="input search text" />
+              </nz-input-group>
+              <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="patient-details p-3 align-items-center p-4">
+              <div class="mb-3 header-image">
+                <img src="./assets/logo.png" height="auto" width="150" alt="" />
+              </div>
+              <div class="details-container">
+                <div class="mb-5">
+                  <h4 class="text-white text-capitalize">
+                    <small class="me-3">Name: </small
+                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.name"></span>{{ data?.name ? data?.name : "" }}
+                  </h4>
+                </div>
+                <div class="mb-5">
+                  <h4 class="text-white text-capitalize">
+                    <small class="me-3">Age: </small
+                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.age"></span>{{ data?.age ? data?.age : "" }}
+                  </h4>
+                </div>
+                <div class="mb-5">
+                  <h4 class="text-white text-capitalize">
+                    <small class="me-3">Birth Date: </small
+                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.birthdate"></span>{{ data?.birthdate ? data?.birthdate : "" }}
+                  </h4>
+                </div>
+                <div class="mb-5">
+                  <h4 class="text-white text-capitalize">
+                    <small class="me-3">Gender: </small
+                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.gender"></span>{{ data?.gender ? data?.gender : "" }}
+                  </h4>
+                </div>
+
+                <div class="mb-5">
+                  <h4 class="text-white text-capitalize">
+                    <small class="me-3">Address: </small
+                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.address"></span>{{ data?.address ? data?.address : "" }}
+                  </h4>
+                </div>
+                <div class="mb-5">
+                  <h4 class="text-white text-capitalize">
+                    <small class="me-3">Height: </small
+                    > <span nz-icon [nzType]="'loading'" *ngIf="!data?.height"></span> {{ data?.height ? data?.height : "" }}
+                  </h4>
+                </div>
+                <div class="mb-5">
+                  <h4 class="text-white text-capitalize">
+                    <small class="me-3">Weight: </small
+                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.weight"></span>{{ data?.weight ? data?.weight : "" }}
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

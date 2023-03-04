@@ -1,0 +1,38 @@
+<nz-spin [nzSpinning]="isSpinning">
+  <nz-table #filterTable [nzData]="dataItems" nzTableLayout="fixed">
+    <thead>
+      <tr>
+
+        <th style="user-select: none;" *ngFor="let column of listOfColumns" [nzSortOrder]="column.sortOrder"
+          [nzSortFn]="column.sortFn" [nzSortDirections]="column.sortDirections"
+          [nzFilterMultiple]="column.filterMultiple" [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn">
+          {{ column?.name }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of dataItems">
+        <td nzEllipsis>
+          <p nz-typography nzCopyable [nzCopyText]="data?.name">{{ data?.name ? data?.name:'-' }}</p>
+        </td>
+        <td nzEllipsis>
+          <p nz-typography >{{ data?.gender ? data?.gender:'-' }}</p>
+        </td>
+        <td nzEllipsis>
+          <p nz-typography >{{ data?.address ? data?.address:'-' }}</p>
+        </td>
+        <td nzRight>
+          <div class="action-buttons ">
+            <a class="font-color-primary me-3">View</a>
+            <a class="font-color-primary me-3">Edit</a>
+            <a class="font-color-primary" (click)="deleteData(data?.id)">Delete</a>
+
+
+          </div>
+        </td>
+
+      </tr>
+    </tbody>
+  </nz-table>
+
+</nz-spin>

@@ -1,0 +1,37 @@
+<div class="page-wrapper">
+  <!-- <app-img-bg></app-img-bg> -->
+
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <div class="col-12">
+        <div class="my-5 text-center">
+          <h1 class="h1-responsive font-color-primary">
+            “ IT’S A <span class="font-color-secondary">BEAUTIFUL</span>  DAY TO SAVE <span class="font-color-secondary">LIVES</span>  ”
+
+          </h1>
+        </div>
+        <div class="mt-5 my-3">
+          <div class="search-grp">
+            <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+              <input
+                type="text"
+                class="search-input"
+                nz-input
+                placeholder="Enter patients name"
+              />
+            </nz-input-group>
+            <ng-template #suffixButton>
+              <button nz-button nzType="primary" nzSearch routerLink="/details">
+                <img width="100%" height="60%" style="aspect-ratio:1/1; object-fit: contain;" src="./assets/search.png" alt="">
+              </button>
+            </ng-template>
+          </div> 
+        </div>
+      </div>
+
+    </div>
+    
+  </div>
+  <img src="./assets/waves footer 2.png" alt="" class="img disable-user-select" />
+
+</div>

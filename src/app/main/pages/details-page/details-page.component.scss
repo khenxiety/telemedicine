@@ -1,0 +1,27 @@
+.page-wrapper {
+  min-height: 100vh;
+
+  //   display: flex;
+  //   align-items: center;
+  margin-top: 75px;
+  position: relative;
+  
+
+  .patient-details {
+    background-color: var(--primary);
+    .header-image {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.cards {
+  min-height: 160px;
+}
+.round {
+  border-radius: 10px;
+}
+.border-grn {
+  border: 2px solid #00918f;
+}

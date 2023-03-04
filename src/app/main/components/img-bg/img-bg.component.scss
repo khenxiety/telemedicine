@@ -1,0 +1,17 @@
+.img-bg {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  // object-fit: contain;
+  width: 100%;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+
+  .img {
+    height: 100%;
+    // object-fit: contain;
+    width: 100%;
+  }
+}

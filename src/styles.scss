@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+
+  --primary:#2f5597;
+  --primary-5:#2f559715;
+  --secondary: #ffc000;
+}
+html{
+  scroll-behavior: smooth;
+  transition: .5s all;
+}
+body {
+  overflow-x: hidden;
+
+  position: relative;
+  font-family: "Roboto", sans-serif;
+}
+
+
+.font-color-primary{
+  color: var(--primary) ;
+
+}
+
+.font-color-secondary{
+  color: var(--secondary);
+
+}
+
+.disable-user-select{
+  -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
