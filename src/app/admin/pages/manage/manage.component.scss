@@ -51,3 +51,62 @@ header{
     }
     
   }
+
+
+
+  .table-content{
+min-height: 280px;
+  height: 100%;
+  max-height: 50vh;
+
+  overflow-y: auto;
+}
+
+
+::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* create a container for the custom scrollbar */
+  .scroll-container {
+    position: relative;
+    overflow: auto;
+  }
+  
+  /* create the custom scrollbar track */
+  .scroll-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #f5f5f5; /* or any other color */
+    z-index: 1;
+  }
+  
+  /* create the custom scrollbar thumb */
+  .scroll-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px; /* or any other width */
+    background-color: #ccc; /* or any other color */
+    border-radius: 7px; /* or any other radius */
+    z-index: 2;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  /* show the custom scrollbar thumb on hover */
+  .scroll-container:hover::after {
+    opacity: 0.5;
+  }
+  
+  /* update the position of the custom scrollbar thumb */
+  .scroll-container::-webkit-scrollbar-thumb {
+    width: 12px; /* or any other width */
+    background-color: #ccc; /* or any other color */
+    border-radius: 7px; /* or any other radius */
+    z-index: 2;
+  }

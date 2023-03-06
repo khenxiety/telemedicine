@@ -14,6 +14,7 @@ import { TelemedicineDetailCardsComponent } from './components/telemedicine-deta
 import { TelemedicineInputComponent } from './components/telemedicine-input/telemedicine-input.component';
 import { TelemedicineTextAreaComponent } from './components/telemedicine-text-area/telemedicine-text-area.component';
 import { ImgFooterComponent } from './components/img-footer/img-footer.component';
+import { EmptyPageComponent } from '../empty-page/empty-page.component';
 
 const routes: Routes = [
   {

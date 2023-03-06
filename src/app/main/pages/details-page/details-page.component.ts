@@ -8,7 +8,7 @@ import { getISOWeek } from 'date-fns';
   styleUrls: ['./details-page.component.scss'],
 })
 export class DetailsPageComponent implements OnInit {
-  public activeData: string = '-NMiVtpx0oUimugGXhVB';
+  public activeData: string = '-NP_vubOnDCJElUtmNZh';
   public data: any;
   date = null;
   isEnglish = false;
@@ -25,12 +25,9 @@ export class DetailsPageComponent implements OnInit {
         this.data = res.data;
       });
 
-    this.firebaseService
-      .getDataRealtime()
-      .subscribe((res) => {
-        console.log('snap',res);
-        
-      });
+    this.firebaseService.getDataRealtime().subscribe((res) => {
+      console.log('snap', res);
+    });
     // const dbInstance = ref(this.db, 'data/');
     // onValue(dbInstance, (snapshot) => {
     //   return snapshot.val();

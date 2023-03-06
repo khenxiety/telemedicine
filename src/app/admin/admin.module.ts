@@ -9,6 +9,7 @@ import { TelemedicineSidenavComponent } from './components/telemedicine-sidenav/
 import { TelemedicineTableComponent } from './components/telemedicine-table/telemedicine-table.component';
 import { ManageComponent } from './pages/manage/manage.component';
 import { FormsModule } from '@angular/forms';
+import { ContactInformationPageComponent } from './pages/contact-information-page/contact-information-page.component';
 
 const route: Routes = [
   {
@@ -23,7 +24,12 @@ const route: Routes = [
         path: 'manage',
         component: ManageComponent,
       },
-      
+      // cms
+      {
+        path: 'contact-update',
+        component: ContactInformationPageComponent,
+      },
+
       {
         path: '',
         redirectTo: 'dashboard',
@@ -34,14 +40,19 @@ const route: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdminComponent, TelemedicineSidenavComponent,DashboardComponent, ManageComponent ],
+  declarations: [
+    AdminComponent,
+    TelemedicineSidenavComponent,
+    DashboardComponent,
+    ManageComponent,
+    ContactInformationPageComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(route),
     NgZorroModule,
     FormsModule,
-    AdminComponentsModule
-    
+    AdminComponentsModule,
   ],
 })
 export class AdminModule {}

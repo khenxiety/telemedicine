@@ -37,9 +37,12 @@
             ],
             "styles": [
               "src/theme.less",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/simplebar/dist/simplebar.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/simplebar/dist/simplebar.min.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -1,35 +1,60 @@
-<div class="container-fluid">
-    <header>
-        <div class="row">
-            <div class="col-12">
-                <h2 nz-typography class="h2-responsive font-color-primary mb-0">Manage Data</h2>
-            </div>
-        </div>
-    
-        <div class="row my-4">
-            <div class="col-12 d-flex justify-content-between align-items-end">
-                <div class="filter-container d-flex align-items-end">
-                    <div class="filter">
-                        <label for="datePicker"> Filter by date:</label>
-                        <nz-range-picker  (nzOnCalendarChange)="test($event)" nz-tooltip nzTooltipTitle="Filter by date" id="datePicker" [nzFormat]="dateFormat"></nz-range-picker>
-        
-                    </div>
-                    <button (click)="filterByDateRange()" nz-button *ngIf="date"><span nz-icon nzType="filter" nzTheme="fill"></span></button>
-
-                </div>
-                
-                <a class="reload-btn" [class.disabled]="isLoading" nz-tooltip nzTooltipTitle="Reload Table" (click)="refresh()" ><span nz-icon nzType="redo" nzTheme="outline" class="icon-refresh"></span></a>
-            </div>
-        </div>
-    </header>
-   
-
+<div class="container-fluid" (scroll)="onscroll($event)">
+  <header [ngClass]="scroll ? 'shadow' : ''">
     <div class="row">
-        <div class="col-12">
-            <app-telemedicine-table [dataItems]="data" [isSpinning]="isLoading" ></app-telemedicine-table>
-        </div>
+      <div class="col-12">
+        <h2 nz-typography class="h2-responsive font-color-primary mb-0">
+          Manage Data
+        </h2>
+      </div>
     </div>
 
+    <div class="row my-4">
+      <div class="col-12 d-flex justify-content-between align-items-end">
+        <div class="filter-container d-flex align-items-end">
+          <div class="filter">
+            <label for="datePicker"> Filter by date:</label>
+            <nz-range-picker
+              (nzOnCalendarChange)="datePick($event)"
+              nz-tooltip
+              nzTooltipTitle="Filter by date"
+              id="datePicker"
+              [nzFormat]="dateFormat"
+            ></nz-range-picker>
+          </div>
+          <button
+            (click)="filterByDateRange()"
+            nz-button
+            *ngIf="date[0] && date[1]"
+          >
+            <span nz-icon nzType="filter" nzTheme="fill"></span>
+          </button>
+        </div>
 
+        <a
+          class="reload-btn"
+          [class.disabled]="isLoading"
+          nz-tooltip
+          nzTooltipTitle="Reload Table"
+          (click)="refresh()"
+          ><span
+            nz-icon
+            nzType="redo"
+            nzTheme="outline"
+            class="icon-refresh"
+          ></span
+        ></a>
+      </div>
+    </div>
+  </header>
 
+  <div class="row">
+    <div class="col-12 table-content">
+      <app-telemedicine-table
+        [dataItems]="data"
+        [isSpinning]="isLoading"
+        [listOfColumns]="listOfColumns"
+      ></app-telemedicine-table>
+      <div class="scrollbar-container"></div>
+    </div>
+  </div>
 </div>

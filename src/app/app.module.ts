@@ -24,11 +24,12 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { mainModule } from 'process';
 import { MainModule } from './main/main.module';
+import { EmptyPageComponent } from './empty-page/empty-page.component';
 
 registerLocaleData(en);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EmptyPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
