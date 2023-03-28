@@ -61,6 +61,7 @@ const routes: Routes = [
     TelemedicineTextAreaComponent,
     ImgFooterComponent,
   ],
+  exports: [TelemedicineInputComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

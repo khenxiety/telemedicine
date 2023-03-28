@@ -1,0 +1,15 @@
+<nz-form-item>
+  <nz-form-control [nzErrorTip]="errorMessage">
+    <nz-input-group [nzPrefixIcon]="icon" [nzAddOnBefore]="label">
+      <input
+        class="inputs"
+        [class.round]="isRound"
+        [type]="type"
+        nz-input
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [value]="value"
+      />
+    </nz-input-group>
+  </nz-form-control>
+</nz-form-item>
