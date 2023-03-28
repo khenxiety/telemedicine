@@ -19,60 +19,77 @@
 
   <div class="row mt-4">
     <div class="col-6">
-      <form action="" class="contact-form">
-        <div class="mb-4">
-          <app-telemedicine-admin-input
-            [placeholder]="''"
-            [errorMessage]="'Please provide a name'"
-            [icon]="'mail'"
-            [label]="'Contact'"
-            [type]="'text'"
-            [disabled]="!isUpdating"
-            [isRound]="true"
-            [value]="contactData[0]?.contact"
-          ></app-telemedicine-admin-input>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input
-            [placeholder]="''"
-            [errorMessage]="'Please provide a name'"
-            [icon]="'mail'"
-            [label]="'Address'"
-            [type]="'text'"
-            [disabled]="!isUpdating"
-            [isRound]="true"
-            [value]="contactData[0]?.address"
-          ></app-telemedicine-admin-input>
-        </div>
-        <div class="mb-2">
-          <app-telemedicine-admin-input
-            [placeholder]="''"
-            [errorMessage]="'Please provide a name'"
-            [icon]="'mail'"
-            [label]="'Email'"
-            [type]="'text'"
-            [disabled]="!isUpdating"
-            [isRound]="true"
-            [value]="contactData[0]?.email"
-          ></app-telemedicine-admin-input>
-        </div>
-        <div class="mb-2">
-          <small class="text-muted">Last modified:</small>
-        </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="contactFormGroup"
+          [controlName]="'contact'"
+          [errorMessage]="'Please provide a name'"
+          [icon]="'phone'"
+          [label]="'Contact'"
+          [type]="'text'"
+          [disabled]="!isUpdating"
+          [isRound]="true"
+          [value]="contactData[0]?.contact"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="contactFormGroup"
+          [controlName]="'address'"
+          [errorMessage]="'Please provide a name'"
+          [icon]="'pushpin'"
+          [label]="'Address'"
+          [type]="'text'"
+          [disabled]="!isUpdating"
+          [isRound]="true"
+          [value]="contactData[0]?.address"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-2">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="contactFormGroup"
+          [controlName]="'email'"
+          [errorMessage]="'Please provide a name'"
+          [icon]="'mail'"
+          [label]="'Email'"
+          [type]="'text'"
+          [disabled]="!isUpdating"
+          [isRound]="true"
+          [value]="contactData[0]?.email"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-2">
+        <small class="text-muted"
+          >Last modified:
+          {{ contactData[0]?.lastModified | date : "long" }}</small
+        >
+      </div>
 
-        <div class="mb-4 d-flex">
-          <button
-            class="me-2"
-            nz-button
-            [nzType]="isUpdating ? 'default' : 'primary'"
-            (click)="onClickUpdate()"
-          >
-            {{ isUpdating ? "Cancel" : "Update" }}
-          </button>
+      <div class="mb-4 d-flex">
+        <button
+          class="me-2"
+          nz-button
+          [nzType]="isUpdating ? 'default' : 'primary'"
+          (click)="onClickUpdate()"
+        >
+          {{ isUpdating ? "Cancel" : "Update" }}
+        </button>
 
-          <button nz-button nzType="primary" *ngIf="isUpdating">Confirm</button>
-        </div>
-      </form>
+        <button
+          class="d-flex align-items-center"
+          nz-button
+          nzType="primary"
+          *ngIf="isUpdating"
+          (click)="onClickConfirm()"
+          [disabled]="isLoading"
+        >
+          <span nz-icon [nzType]="'loading'" *ngIf="isLoading"></span>
+          <span>{{ !isLoading ? "Confirm" : "Updating" }}</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

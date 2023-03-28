@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-telemedicine-admin-input',
@@ -8,8 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TelemedicineAdminInputComponent implements OnInit {
   @Input() public placeholder: string = '';
   @Input() public label: string = '';
+  @Input() public formGroupParent: FormGroup = new FormGroup({});
 
-  @Input() public formControlName: string = '';
+  @Input() public controlName: string = '';
   @Input() public errorMessage: string = '';
   @Input() public icon: string = '';
   @Input() public type: string = '';
