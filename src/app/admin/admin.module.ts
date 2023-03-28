@@ -8,7 +8,7 @@ import { NgZorroModule } from '../ng-zorro.module';
 import { TelemedicineSidenavComponent } from './components/telemedicine-sidenav/telemedicine-sidenav.component';
 import { TelemedicineTableComponent } from './components/telemedicine-table/telemedicine-table.component';
 import { ManageComponent } from './pages/manage/manage.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactInformationPageComponent } from './pages/contact-information-page/contact-information-page.component';
 import { UpdatePageComponent } from './pages/update-page/update-page.component';
 
@@ -59,6 +59,7 @@ const route: Routes = [
     NgZorroModule,
     FormsModule,
     AdminComponentsModule,
+    ReactiveFormsModule,
   ],
 })
 export class AdminModule {}
