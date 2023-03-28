@@ -64,8 +64,6 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobileView = window.innerWidth < 767;
-
-    localStorage.clear();
   }
 
   logout(): void {
