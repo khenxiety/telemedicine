@@ -22,7 +22,7 @@ export class AdminComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   public isScrolling: boolean = false;
-  public isMobileView:boolean = false
+  public isMobileView: boolean = false;
   constructor(
     public breadcrumbService: BreadcrumbService,
     private changeDetectorRef: ChangeDetectorRef,
@@ -63,13 +63,15 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-          this.isMobileView = window.innerWidth < 767;
+    this.isMobileView = window.innerWidth < 767;
+
+    localStorage.clear();
   }
 
   logout(): void {
     window.location.href = '/';
   }
-   @HostListener('window: resize', ['$event.target'])
+  @HostListener('window: resize', ['$event.target'])
   public onResize(eventTarget: EventTarget): void {
     if ((<Window>eventTarget).innerWidth < 767) {
       if (!this.isMobileView) {
