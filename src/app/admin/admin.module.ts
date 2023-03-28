@@ -10,6 +10,7 @@ import { TelemedicineTableComponent } from './components/telemedicine-table/tele
 import { ManageComponent } from './pages/manage/manage.component';
 import { FormsModule } from '@angular/forms';
 import { ContactInformationPageComponent } from './pages/contact-information-page/contact-information-page.component';
+import { UpdatePageComponent } from './pages/update-page/update-page.component';
 
 const route: Routes = [
   {
@@ -23,6 +24,10 @@ const route: Routes = [
       {
         path: 'manage',
         component: ManageComponent,
+      },
+      {
+        path: 'manage/update-data/:id',
+        component: UpdatePageComponent,
       },
       // cms
       {
@@ -46,6 +51,7 @@ const route: Routes = [
     DashboardComponent,
     ManageComponent,
     ContactInformationPageComponent,
+    UpdatePageComponent,
   ],
   imports: [
     CommonModule,

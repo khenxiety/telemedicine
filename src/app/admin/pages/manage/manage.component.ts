@@ -18,7 +18,8 @@ import { Helper } from 'src/app/helpers/helper.helper';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { TelemedicineTableComponent } from '../../components/telemedicine-table/telemedicine-table.component';
 import { BreadcrumbService } from '../../services/breadcrumbs.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 interface ColumnItem {
   name: string;
   sortOrder: NzTableSortOrder | null;
@@ -43,37 +44,49 @@ export class ManageComponent implements OnInit {
     | TelemedicineTableComponent
     | undefined;
   date: any[] = [];
-
   data: any[] = [];
-
   dateFormat = 'yyyy/MM/dd';
   monthFormat = 'yyyy/MM';
 
+
   public isLoading: boolean = false;
-
   public listOfColumns: ColumnItem[] = [];
-
   public scroll: boolean = false;
+  public tableView:boolean=true
+  public pageSize:number = 5
+  public selectedPage:number = 1
+
+  public newDataList:any[]=[]
+
   constructor(
     private firebaseService: FirebaseService,
     private message: NzMessageService,
     private breadcrumbsService: BreadcrumbService,
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
+
   ) {}
 
-  @HostListener('scroll', ['$event']) onscroll(event: any) {
-    const container = this.elementRef.nativeElement;
-    const scrollPosition = container.scrollTop;
-    console.log(event);
-    // if (window.scrollY > 10) {
-    //   this.scroll = true;
-    // } else {
-    //   this.scroll = false;
-    // }
-  }
+  // @HostListener('scroll', ['$event']) onscroll(event: any) {
+  //   // const container = this.elementRef.nativeElement;
+  //   // const scrollPosition = container.scrollTop;
+  //   const div = this.elementRef.nativeElement.querySelector('#myDiv');
+
+  //   if(div){
+  //   const scrollTop = div.scrollTop;
+
+  //     console.log(scrollTop)
+  //   }
+  // }
   ngOnInit(): void {
+
+
+    if(environment.production){
+      console.clear()
+    }
+
     this.breadcrumbsService.setTitle({
       relative: 'Dashboard',
       page: 'Manage',
@@ -84,6 +97,45 @@ export class ManageComponent implements OnInit {
     });
     // this.addMockData();
   }
+
+  switchView(){
+    this.tableView = this.tableView ? false : true
+  }
+
+  // get pageNumbers():number[]{
+    
+  //   return Array(Math.ceil(this.data.length / this.pageSize)).fill(0).map((x,i) =>i + 1) 
+  // }
+
+  // public changePage(page:number, action:string):void{
+  //   if(action ==='number'){
+  //     this.selectedPage = page
+
+  //     return
+  //   }
+
+  //   if(action ==='number'){
+  //     this.selectedPage += page
+
+  //     return
+  //   }
+
+  //   if(action ==='number'){
+  //     this.selectedPage += page
+
+  //     return
+  //   }
+  // }
+
+  // public slicedData():void{
+
+  //   const pageIndex = (this.selectedPage -1) * this.pageSize
+  //   const endIndex = (this.selectedPage -1) * this.pageSize + this.pageSize
+  //   this.newDataList=[]
+  //   this.newDataList=this.data.slice(pageIndex, endIndex)
+
+
+  // }
 
   loadData(reload?: boolean) {
     this.isLoading = true;
@@ -157,7 +209,10 @@ export class ManageComponent implements OnInit {
   public refresh(): void {
     this.data = [];
     sessionStorage.clear();
+    this.date = []
     this.loadData(true);
+    this.telemedicineTable?.ngOnInit()
+
     // this.telemedicineTable?.ngOnInit()
   }
 
@@ -176,8 +231,10 @@ export class ManageComponent implements OnInit {
         )
         .subscribe((res) => {
           this.data = Helper.toArrayObjects(res);
+          this.telemedicineTable?.ngOnInit()
+          
           this.isLoading = false;
-          console.log(this.data);
+          
         });
     } else {
       console.log('please select a date');
@@ -187,7 +244,7 @@ export class ManageComponent implements OnInit {
   addMockData() {
     for (let i = 0; i < 15; i++) {
       const data = {
-        address: `test${i}`,
+        address: `${i} floor, Buendia, Pasay Metro Manila`,
         age: 25,
         birthdate: '08-31-1999',
         bloodPressure: '23/2',
@@ -206,5 +263,30 @@ export class ManageComponent implements OnInit {
         console.log(res, 'success');
       });
     }
+  }
+
+
+  onClickActions(event:any){
+    this.isLoading=true
+    if(event.action ==='delete'){
+      this.firebaseService.removeData(event.id).then((res) => {
+        this.message.success('Data deleted successfully');
+        this.refresh()
+  
+      });
+
+      return 
+    }
+
+    if(event.action ==='update'){
+
+      this.router.navigate(['admin/manage/update-data',event.id])
+      
+
+      return 
+    }
+
+
+
   }
 }

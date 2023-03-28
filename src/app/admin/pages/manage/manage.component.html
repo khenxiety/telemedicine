@@ -1,4 +1,4 @@
-<div class="container-fluid" (scroll)="onscroll($event)">
+<div class="container-fluid">
   <header [ngClass]="scroll ? 'shadow' : ''">
     <div class="row">
       <div class="col-12">
@@ -21,6 +21,7 @@
               [nzFormat]="dateFormat"
             ></nz-range-picker>
           </div>
+
           <button
             (click)="filterByDateRange()"
             nz-button
@@ -30,19 +31,46 @@
           </button>
         </div>
 
-        <a
-          class="reload-btn"
-          [class.disabled]="isLoading"
-          nz-tooltip
-          nzTooltipTitle="Reload Table"
-          (click)="refresh()"
-          ><span
-            nz-icon
-            nzType="redo"
-            nzTheme="outline"
-            class="icon-refresh"
-          ></span
-        ></a>
+        <div class="right-buttons d-flex justify-content-between gap-4">
+          <a
+            class="reload-btn font-color-primary"
+            (click)="switchView()"
+            
+          >
+            <span
+              *ngIf="!tableView"
+              class="view-icon"
+              nz-icon
+              nzType="unordered-list"
+              nzTheme="outline"
+              nz-tooltip
+              nzTooltipTitle="Switch grid view"
+            ></span>
+            <span
+              *ngIf="tableView"
+              class="view-icon"
+              nz-icon
+              nzType="appstore"
+              nzTheme="fill"
+              nz-tooltip
+              nzTooltipTitle="Switch list view"
+            ></span>
+          </a>
+
+          <a
+            class="reload-btn font-color-primary"
+            [class.disabled]="isLoading"
+            nz-tooltip
+            nzTooltipTitle="Reload Table"
+            (click)="refresh()"
+            ><span
+              nz-icon
+              nzType="redo"
+              nzTheme="outline"
+              class="icon-refresh"
+            ></span
+          ></a>
+        </div>
       </div>
     </div>
   </header>
@@ -50,10 +78,19 @@
   <div class="row">
     <div class="col-12 table-content">
       <app-telemedicine-table
+        *ngIf="tableView && data.length != 0"
         [dataItems]="data"
         [isSpinning]="isLoading"
         [listOfColumns]="listOfColumns"
+        (actions)="onClickActions($event)"
       ></app-telemedicine-table>
+
+      <app-telemedicine-list
+        *ngIf="!tableView"
+        [dataItems]="data"
+        [isSpinning]="isLoading"
+        (actions)="onClickActions($event)"
+      ></app-telemedicine-list>
       <div class="scrollbar-container"></div>
     </div>
   </div>

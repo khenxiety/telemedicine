@@ -31,6 +31,7 @@
 
       border: 1px solid var(--primary);
       border-radius: 70px;
+      
       .text-container {
         h2 {
           font-weight: 1000;
@@ -79,6 +80,7 @@
   }
 }
 .section-2{
+  padding-block: 100px;
   h1{
     font-family: "Poppins", sans-serif;
     font-weight: 900;

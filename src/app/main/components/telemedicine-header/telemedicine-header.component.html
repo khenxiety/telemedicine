@@ -15,7 +15,7 @@
         >
       </div>
 
-      <ul *ngIf="currentRoute != '/details'">
+      <ul *ngIf="currentRoute != '/details' && !isMobileView">
         <li
           *ngFor="let element of headerElement"
           class="me-4"
@@ -25,6 +25,23 @@
           <a [routerLink]="element.route">{{ element.title }}</a>
         </li>
       </ul>
+
+      <div class="mobile-view" *ngIf="isMobileView">
+
+        <a nz-dropdown [nzDropdownMenu]="menu">
+          <span nz-icon nzType="menu-fold" nzTheme="outline"></span>
+        </a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item *ngFor="let element of headerElement">
+              <a class="font-color-primary d-flex align-items-center" [routerLink]="element.route" routerLinkActive="font-color-secondary" style="font-weight: 600; ">
+                <span nz-icon [nzType]="element.icon" [nzTheme]="element.fill" class="me-3"></span>
+                {{ element.title.toUpperCase() }}
+              </a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
     </div>
   </div>
 </header>

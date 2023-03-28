@@ -11,26 +11,36 @@ export class TelemedicineHeaderComponent implements OnInit {
     {
       title: 'home',
       route: '/search',
+      icon: 'home',
+      fill: 'fill',
     },
     {
       title: 'about us',
       route: '/none',
+      icon: 'info-circle',
+      fill: 'fill',
     },
     {
       title: 'features',
       route: '/none',
+      icon: 'appstore',
+      fill: 'fill',
     },
     {
       title: 'contact',
       route: '/none',
+      icon: 'phone',
+      fill: 'fill',
     },
     {
       title: 'login',
       route: '/login',
+      icon: 'login',
+      fill: 'outline',
     },
   ];
-
-  public navScroll:boolean = false
+  public isMobileView: boolean = false;
+  public navScroll: boolean = false;
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -47,7 +57,23 @@ export class TelemedicineHeaderComponent implements OnInit {
     }
   }
 
+  @HostListener('window: resize', ['$event.target'])
+  public onResize(eventTarget: EventTarget): void {
+    if ((<Window>eventTarget).innerWidth < 767) {
+      if (!this.isMobileView) {
+        this.isMobileView = true;
+      }
+    }
+    if ((<Window>eventTarget).innerWidth >= 767) {
+      if (this.isMobileView) {
+        this.isMobileView = false;
+      }
+    }
+    console.log((<Window>eventTarget).innerWidth);
+  }
+
   ngOnInit(): void {
     console.log(this.currentRoute);
+    this.isMobileView = window.innerWidth < 767;
   }
 }

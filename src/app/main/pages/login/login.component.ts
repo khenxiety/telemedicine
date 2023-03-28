@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Host, HostListener, OnInit } from '@angular/core';
 import { Helper } from 'src/app/helpers/helper.helper';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
@@ -10,11 +10,13 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class LoginComponent implements OnInit {
   contactData: any[] = [];
 
+  public isMobileView:boolean =false
   constructor(private firebaseService: FirebaseService) {}
 
   ngOnInit(): void {
-    this.addContactDataMock();
+    // this.addContactDataMock();
 
+    this.isMobileView = window.innerWidth < 767
     this.getContactsData();
   }
 
@@ -27,14 +29,13 @@ export class LoginComponent implements OnInit {
       this.firebaseService.getCmsContactData().subscribe((res) => {
         this.contactData = Helper.toArrayObjects(res);
         localStorage.setItem('contactData', JSON.stringify(this.contactData));
-        console.log(this.contactData);
       });
     }
   }
 
   addContactDataMock() {
     const data = {
-      address: 'Batangas State Universities',
+      address: 'Pablo Borbon, Batangas State University',
       contact: '09362173627',
       email: 'telemedicine@yahoo.com',
     };
@@ -44,5 +45,20 @@ export class LoginComponent implements OnInit {
       .then((res) => {
         console.log(res, 'success');
       });
+  }
+
+  @HostListener('window: resize',['$event.target'])
+  public onResize(eventTarget: EventTarget):void{
+
+    if((<Window>eventTarget).innerWidth < 767){
+      if(!this.isMobileView){
+        this.isMobileView = true
+      }
+    }
+    if((<Window>eventTarget).innerWidth >= 767){
+      if(this.isMobileView){
+        this.isMobileView = false
+      }
+    }
   }
 }
