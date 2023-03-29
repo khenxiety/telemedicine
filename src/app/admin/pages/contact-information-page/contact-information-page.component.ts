@@ -63,6 +63,7 @@ export class ContactInformationPageComponent implements OnInit, OnDestroy {
 
   onClickUpdate(): void {
     this.isUpdating = this.isUpdating ? false : true;
+    this.getContactsData()
     this.message.info(this.isUpdating ? 'Update mode' : 'View mode');
   }
 
