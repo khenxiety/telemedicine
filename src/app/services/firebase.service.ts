@@ -121,6 +121,11 @@ export class FirebaseService {
     );
   }
 
+  updatePatientData(key: string, data: any) {
+    const dbInstance = ref(this.db, `data/${key}`);
+    return update(dbInstance, data);
+  }
+
   removeData(id: string): Promise<void> {
     const dbInstance = ref(this.db, `data/${id}`);
     return remove(dbInstance);

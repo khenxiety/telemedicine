@@ -1,23 +1,194 @@
 <div class="container-fluid">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 nz-typography class="h2-responsive font-color-primary mb-0">
+        Patient Details
+      </h2>
+    </div>
+  </div>
 
-    <div class="row mb-4">
-      <div class="col-12">
-        <h2 nz-typography class="h2-responsive font-color-primary mb-0">Patient Details</h2>
+  <!-- <div class="row my-4 tool-bar">
+    <div class="col-12">Toolbar</div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-6">
+      <div class="mb-4">
+        <h6>Personal Information</h6>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'name'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Name'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'age'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Age'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'birthdate'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Birthdate'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'address'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Address'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'gender'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Gender'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'contactNumber'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Contact'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
       </div>
     </div>
 
-    <div class="row my-4 tool-bar">
-        <div class="col-12">
-            Toolbar
-        </div>
-
+    <div class="col-6">
+      <div class="mb-4">
+        <h6>Health Record</h6>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'bloodPressure'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Blood Pressure'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'heartRate'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Heart rate'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'temperature'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Temperature'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'oxygenSaturation'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Oxygen Saturation'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-4">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'height'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Height'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
+      <div class="mb-2">
+        <app-telemedicine-admin-input
+          [placeholder]="''"
+          [formGroupParent]="updateFormGroup"
+          [controlName]="'weight'"
+          [errorMessage]="'Please provide a name'"
+          [label]="'Weight'"
+          [type]="'text'"
+          [isRound]="true"
+        ></app-telemedicine-admin-input>
+      </div>
     </div>
-  
-    <div class="row">
-      <div class="col"></div>
-      <div class="col"></div>
-    </div>
-  
-  
   </div>
-  
+
+  <div class="row">
+    <div class="col-12">
+      <div class="mb-1">
+        <small class="text-muted"
+          >Date Created: {{ patientData?.date | date }}</small
+        >
+      </div>
+      <div class="mb-1">
+        <small class="text-muted">Last modified: {{ "Test" }}</small>
+      </div>
+      <div class="mb-4 d-flex justify-content-end">
+        <button
+          class="me-2"
+          nz-button
+          [nzType]="isUpdating ? 'default' : 'primary'"
+          (click)="onClickUpdate()"
+        >
+          {{ isUpdating ? "Cancel" : "Update" }}
+        </button>
+
+        <button
+          class="d-flex align-items-center"
+          nz-button
+          nzType="primary"
+          *ngIf="isUpdating"
+          (click)="onClickConfirm()"
+          [disabled]="isLoading"
+        >
+          <span nz-icon [nzType]="'loading'" *ngIf="isLoading"></span>
+          <span>{{ !isLoading ? "Confirm" : "Updating" }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

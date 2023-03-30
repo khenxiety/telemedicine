@@ -30,28 +30,38 @@
           <p nz-typography>{{ data?.address ? data?.address : "-" }}</p>
         </td>
         <td nzRight>
-          <div class="action-buttons d-flex ">
-            
-            <a class="font-color-primary disable-user-select me-3" >
+          <div class="action-buttons d-flex">
+            <!-- <a class="font-color-primary disable-user-select me-3" >
               <span nz-icon nzType="info-circle" nzTheme="fill" *ngIf="isMobileView"></span>
               <span *ngIf="!isMobileView">View</span> 
-            </a>
-            <a class="font-color-primary disable-user-select me-3" (click)="emitActions({action:'update',id:data?.id})">
-              <span nz-icon nzType="edit" nzTheme="fill" *ngIf="isMobileView"></span> 
-              <span *ngIf="!isMobileView">Edit</span> 
+            </a> -->
+            <a
+              class="font-color-primary disable-user-select me-3"
+              (click)="emitActions({ action: 'update', id: data?.id })"
+            >
+              <span
+                nz-icon
+                nzType="edit"
+                nzTheme="fill"
+                *ngIf="isMobileView"
+              ></span>
+              <span *ngIf="!isMobileView">View</span>
             </a>
             <a
               class="font-color-primary disable-user-select"
               nz-popconfirm
               nzPopconfirmTitle="Are you sure delete this data?"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="emitActions({action:'delete',id:data?.id})"
+              (nzOnConfirm)="emitActions({ action: 'delete', id: data?.id })"
               (nzOnCancel)="cancel()"
-              >
-              <span nz-icon nzType="delete" nzTheme="fill" *ngIf="isMobileView"></span>
-              <span *ngIf="!isMobileView">Delete</span> 
-
-              
+            >
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="fill"
+                *ngIf="isMobileView"
+              ></span>
+              <span *ngIf="!isMobileView">Delete</span>
             </a>
           </div>
         </td>
