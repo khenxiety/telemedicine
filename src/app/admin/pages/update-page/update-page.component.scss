@@ -1,0 +1,28 @@
+.details-item{
+    strong, span{
+        font-size: 17px;
+    }
+
+   
+    span{
+        text-transform: capitalize;
+    }
+}
+
+ h2{
+    color: var(--primary);
+
+}
+h5{
+    color: var(--secondary);
+
+}
+
+
+.edit-btn, .delete-btn{
+
+    span{
+        font-size: 20px;
+    }
+
+}

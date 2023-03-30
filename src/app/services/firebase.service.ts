@@ -12,6 +12,7 @@ import {
   query,
   push,
   update,
+  serverTimestamp
 } from '@angular/fire/database';
 import { from, Observable } from 'rxjs';
 
@@ -123,6 +124,9 @@ export class FirebaseService {
 
   updatePatientData(key: string, data: any) {
     const dbInstance = ref(this.db, `data/${key}`);
+
+    data.lastModified = new Date().toString()
+
     return update(dbInstance, data);
   }
 

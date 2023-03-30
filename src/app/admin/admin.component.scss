@@ -73,11 +73,12 @@ nz-footer {
 }
 
 
-// @media (max-width:720px) {
+@media (max-width:550px) {
 
-//   nz-sider{
-//     display: none;
-//   }
+  .inner-content{
+    padding: 0 5px;
+
+  }
   
-// }
+}
 

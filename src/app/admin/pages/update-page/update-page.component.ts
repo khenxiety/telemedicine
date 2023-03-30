@@ -68,6 +68,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
   }
 
   getDataById(): void {
+    this.isLoading = true;
     this.ubsubscribeData = this.firebaseService
       .getSingleDataSnapshot(this.dataId)
       .pipe(
@@ -78,7 +79,9 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         this.patientData = response.data;
         this.buildFormData(this.patientData);
-        console.log(this.patientData);
+        this.isLoading = false;
+
+        
       });
   }
 
@@ -111,18 +114,60 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
     this.isUpdating = this.isUpdating ? false : true;
     this.message.info(this.isUpdating ? 'Update mode' : 'View mode');
   }
-  onClickConfirm() {
+  onClickConfirm(action:string) {
+
+    if(!this.updateFormGroup.valid){
+      this.message.error('Please fill up all the fields');
+
+      return
+    }
+    if(action === 'update'){
+      this.updatePatientData()
+      return
+    }
+
+    if(action ==='delete'){
+      this.deletePatientData()
+
+      return 
+
+    }
+    
+  }
+
+  cancelDelete():void{
+
+  }
+
+
+  async updatePatientData():Promise<void> {
     this.isLoading = true;
     const data = {
       ...this.updateFormGroup.value,
     };
-    this.firebaseService.updatePatientData(this.dataId, data).then((res) => {
+    try {
+      const dataUpdate = await this.firebaseService.updatePatientData(this.dataId, data)
       this.isUpdating = false;
-      this.isLoading = false;
       this.getDataById();
-
       sessionStorage.removeItem('recipes');
       this.message.success('Record updated successfully');
-    });
+      return dataUpdate
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async deletePatientData():Promise<void>{
+    this.isLoading = true;
+    try {
+      const dataRemove = await this.firebaseService.removeData(this.dataId)
+      this.message.success('Data deleted successfully');
+      this.router.navigate(['/admin/manage'])
+     
+      return dataRemove
+      
+    } catch (error) {
+      throw error
+    }
   }
 }
