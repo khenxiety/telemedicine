@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbService } from '../../services/breadcrumbs.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { Helper } from 'src/app/helpers/helper.helper';
-import { catchError } from 'rxjs';
+import { catchError, Subscription } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
@@ -20,9 +20,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class UpdatePageComponent implements OnInit, OnDestroy {
   private dataId: string = '';
   public patientData: any;
-  private ubsubscribeData: any;
   public isLoading: boolean = false;
   public isUpdating: boolean = false;
+  
+  private ubsubscribeData: Subscription = new Subscription();
 
   public updateFormGroup: FormGroup = new FormGroup({
     address: new FormControl('', [Validators.required]),
@@ -64,7 +65,9 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ubsubscribeData.unsubscribe();
+    if (this.ubsubscribeData) {
+      this.ubsubscribeData.unsubscribe();
+    }
   }
 
   getDataById(): void {
@@ -80,8 +83,6 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
         this.patientData = response.data;
         this.buildFormData(this.patientData);
         this.isLoading = false;
-
-        
       });
   }
 
@@ -116,7 +117,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
   }
   onClickConfirm(action:string) {
 
-    if(!this.updateFormGroup.valid){
+    if(!this.updateFormGroup.valid && action !='delete'){
       this.message.error('Please fill up all the fields');
 
       return
@@ -151,7 +152,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
       this.getDataById();
       sessionStorage.removeItem('recipes');
       this.message.success('Record updated successfully');
-      return dataUpdate
+      return Promise.resolve(dataUpdate)
     } catch (error) {
       throw error
     }
@@ -164,7 +165,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
       this.message.success('Data deleted successfully');
       this.router.navigate(['/admin/manage'])
      
-      return dataRemove
+      return Promise.resolve(dataRemove)
       
     } catch (error) {
       throw error

@@ -67,7 +67,7 @@ export class ContactInformationPageComponent implements OnInit, OnDestroy {
     this.message.info(this.isUpdating ? 'Update mode' : 'View mode');
   }
 
-  onClickConfirm(): void {
+  async onClickConfirm(): Promise<void> {
     this.isLoading = true;
     const data = {
       ...this.contactFormGroup.value,
@@ -75,16 +75,17 @@ export class ContactInformationPageComponent implements OnInit, OnDestroy {
       lastModified: new Date().toLocaleString(),
     };
 
-    this.firebaseService
-      .updateCmsContactData('-NPfScA4r5sR1HSAuRJm', data)
-      .then((res) => {
-        this.isUpdating = this.isUpdating ? false : true;
-        this.isLoading = false;
-
-        this.localStorageRefreshItem();
-        this.message.success('Data updated successfully');
-        console.log(res, 'success');
-      });
+    try {
+      const updateData = await this.firebaseService.updateCmsContactData('-NPfScA4r5sR1HSAuRJm', data)
+      this.isUpdating = !this.isUpdating;
+      this.isLoading = false;
+      this.localStorageRefreshItem();
+      this.message.success('Data updated successfully');
+    } catch (error) {
+      console.error(error)
+      throw error
+      
+    }
   }
 
   localStorageRefreshItem(): void {

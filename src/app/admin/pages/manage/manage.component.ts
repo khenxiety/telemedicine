@@ -18,7 +18,7 @@ import { Helper } from 'src/app/helpers/helper.helper';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { TelemedicineTableComponent } from '../../components/telemedicine-table/telemedicine-table.component';
 import { BreadcrumbService } from '../../services/breadcrumbs.service';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 interface ColumnItem {
   name: string;
@@ -52,11 +52,11 @@ export class ManageComponent implements OnInit {
   public isLoading: boolean = false;
   public listOfColumns: ColumnItem[] = [];
   public scroll: boolean = false;
-  public tableView:boolean=true
-  public pageSize:number = 5
-  public selectedPage:number = 1
+  public tableView: boolean = true
+  public pageSize: number = 5
+  public selectedPage: number = 1
 
-  public newDataList:any[]=[]
+  public newDataList: any[] = []
 
   constructor(
     private firebaseService: FirebaseService,
@@ -67,7 +67,7 @@ export class ManageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
 
-  ) {}
+  ) { }
 
   // @HostListener('scroll', ['$event']) onscroll(event: any) {
   //   // const container = this.elementRef.nativeElement;
@@ -81,12 +81,6 @@ export class ManageComponent implements OnInit {
   //   }
   // }
   ngOnInit(): void {
-
-
-    if(environment.production){
-      console.clear()
-    }
-
     this.breadcrumbsService.setTitle({
       relative: 'Dashboard',
       page: 'Manage',
@@ -98,12 +92,12 @@ export class ManageComponent implements OnInit {
     // this.addMockData();
   }
 
-  switchView(){
+  switchView() {
     this.tableView = this.tableView ? false : true
   }
 
   // get pageNumbers():number[]{
-    
+
   //   return Array(Math.ceil(this.data.length / this.pageSize)).fill(0).map((x,i) =>i + 1) 
   // }
 
@@ -232,9 +226,9 @@ export class ManageComponent implements OnInit {
         .subscribe((res) => {
           this.data = Helper.toArrayObjects(res);
           this.telemedicineTable?.ngOnInit()
-          
+
           this.isLoading = false;
-          
+
         });
     } else {
       console.log('please select a date');
@@ -266,27 +260,19 @@ export class ManageComponent implements OnInit {
   }
 
 
-  onClickActions(event:any){
-    this.isLoading=true
-    if(event.action ==='delete'){
-      this.firebaseService.removeData(event.id).then((res) => {
+  async onClickActions(event: any) {
+    this.isLoading = true;
+
+    switch (event.action) {
+      case 'delete':
+        await this.firebaseService.removeData(event.id)
         this.message.success('Data deleted successfully');
-        this.refresh()
-  
-      });
+        this.refresh();
+        break;
 
-      return 
+      case 'update':
+        this.router.navigate(['admin/manage/update-data', event.id]);
+        break;
     }
-
-    if(event.action ==='update'){
-
-      this.router.navigate(['admin/manage/update-data',event.id])
-      
-
-      return 
-    }
-
-
-
   }
 }
