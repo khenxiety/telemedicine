@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter,HostListener } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { catchError, of } from 'rxjs';
 const count = 5;
@@ -20,8 +20,13 @@ export class TelemedicineListComponent implements OnInit {
   @Input() isSpinning: boolean = false;
 
   @Output() actions: any = new EventEmitter();
+
+  public isMobileView:boolean = false
+
   constructor(private http: HttpClient, private msg: NzMessageService) {}
   ngOnInit(): void {
+    this.isMobileView = window.innerWidth < 767;
+
     this.getData((res: any) => {
       this.data = res.results;
       this.list = res.results;
@@ -60,4 +65,20 @@ export class TelemedicineListComponent implements OnInit {
   }
 
   cancel() {}
+
+
+  @HostListener('window: resize', ['$event.target'])
+  public onResize(eventTarget: EventTarget): void {
+    if ((<Window>eventTarget).innerWidth < 767) {
+      if (!this.isMobileView) {
+        this.isMobileView = true;
+      }
+    }
+    if ((<Window>eventTarget).innerWidth >= 767) {
+      if (this.isMobileView) {
+        this.isMobileView = false;
+      }
+    }
+    console.log((<Window>eventTarget).innerWidth);
+  }
 }

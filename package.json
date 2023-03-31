@@ -25,6 +25,7 @@
     "d3-zoom": "^3.0.0",
     "dagre": "^0.8.5",
     "dagre-compound": "^0.0.13",
+    "jspdf": "^2.5.1",
     "monaco-editor": "^0.34.1",
     "ng-zorro-antd": "^13.4.0",
     "rxjs": "~7.4.0",

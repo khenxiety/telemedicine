@@ -22,7 +22,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3">
               <app-telemedicine-detail-cards
                 [imgURL]="'./assets/temperature.png'"
-                [data]="'36 deg'"
+                [data]="data?.temperature"
                 [filled]="false"
                 [description]="'Temperature'"
                 [isWideCard]="false"
@@ -31,7 +31,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3">
               <app-telemedicine-detail-cards
                 [imgURL]="'./assets/heart.png'"
-                [data]="'36 deg'"
+                [data]="data?.heartRate"
                 [filled]="false"
                 [description]="'Heart Rate'"
                 [isWideCard]="false"
@@ -40,7 +40,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3">
               <app-telemedicine-detail-cards
                 [imgURL]="'./assets/blood.png'"
-                [data]="'36 deg'"
+                [data]="data?.bloodPressure"
                 [filled]="true"
                 [description]="'Blood Pressure'"
                 [isWideCard]="false"
@@ -49,7 +49,7 @@
             <div class="col-lg-3 col-md-3 col-sm-3">
               <app-telemedicine-detail-cards
                 [imgURL]="'./assets/ox2.png'"
-                [data]="'36 deg'"
+                [data]="data?.oxygenSaturation"
                 [filled]="false"
                 [description]="'Oxygen Saturation'"
                 [isWideCard]="false"
@@ -60,7 +60,7 @@
             <div class="col">
               <app-telemedicine-detail-cards
                 [imgURL]="'./assets/heartECG.jpg'"
-                [data]="'36 deg'"
+                [data]="data?.temperature"
                 [filled]="false"
                 [description]="'Heart ECG'"
                 [isWideCard]="true"
@@ -79,11 +79,16 @@
         <div class="row mb-5">
           <div class="col">
             <div class="search-input">
-              <nz-input-group [nzSuffix]="suffixIconSearch">
-                <input type="text" nz-input placeholder="input search text" />
+              <nz-input-group [formGroup]="formGroup" [nzSuffix]="suffixIconSearch">
+                <input type="text" nz-input placeholder="input search text" formControlName="search" />
               </nz-input-group>
               <ng-template #suffixIconSearch>
+                <button class="clear-btn" (click)="onSearch()">
+                  
                 <span nz-icon nzType="search"></span>
+
+                </button>
+
               </ng-template>
             </div>
           </div>
@@ -92,51 +97,51 @@
           <div class="col">
             <div class="patient-details p-3 align-items-center p-4">
               <div class="mb-3 header-image">
-                <img src="./assets/logo.png" height="auto" width="150" alt="" />
+                <img [src]="data ? data.image :'./assets/logo.png'" height="auto" width="150" alt="" />
               </div>
               <div class="details-container">
                 <div class="mb-5">
-                  <h4 class="text-white text-capitalize">
+                  <h5 class="text-white text-capitalize">
                     <small class="me-3">Name: </small
                     ><span nz-icon [nzType]="'loading'" *ngIf="!data?.name"></span>{{ data?.name ? data?.name : "" }}
-                  </h4>
+                  </h5>
                 </div>
                 <div class="mb-5">
-                  <h4 class="text-white text-capitalize">
+                  <h5 class="text-white text-capitalize">
                     <small class="me-3">Age: </small
                     ><span nz-icon [nzType]="'loading'" *ngIf="!data?.age"></span>{{ data?.age ? data?.age : "" }}
-                  </h4>
+                  </h5>
                 </div>
                 <div class="mb-5">
-                  <h4 class="text-white text-capitalize">
+                  <h5 class="text-white text-capitalize">
                     <small class="me-3">Birth Date: </small
                     ><span nz-icon [nzType]="'loading'" *ngIf="!data?.birthdate"></span>{{ data?.birthdate ? data?.birthdate : "" }}
-                  </h4>
+                  </h5>
                 </div>
                 <div class="mb-5">
-                  <h4 class="text-white text-capitalize">
+                  <h5 class="text-white text-capitalize">
                     <small class="me-3">Gender: </small
                     ><span nz-icon [nzType]="'loading'" *ngIf="!data?.gender"></span>{{ data?.gender ? data?.gender : "" }}
-                  </h4>
+                  </h5>
                 </div>
 
                 <div class="mb-5">
-                  <h4 class="text-white text-capitalize">
+                  <h5 class="text-white text-capitalize">
                     <small class="me-3">Address: </small
                     ><span nz-icon [nzType]="'loading'" *ngIf="!data?.address"></span>{{ data?.address ? data?.address : "" }}
-                  </h4>
+                  </h5>
                 </div>
                 <div class="mb-5">
-                  <h4 class="text-white text-capitalize">
+                  <h5 class="text-white text-capitalize">
                     <small class="me-3">Height: </small
                     > <span nz-icon [nzType]="'loading'" *ngIf="!data?.height"></span> {{ data?.height ? data?.height : "" }}
-                  </h4>
+                  </h5>
                 </div>
                 <div class="mb-5">
-                  <h4 class="text-white text-capitalize">
+                  <h5 class="text-white text-capitalize">
                     <small class="me-3">Weight: </small
                     ><span nz-icon [nzType]="'loading'" *ngIf="!data?.weight"></span>{{ data?.weight ? data?.weight : "" }}
-                  </h4>
+                  </h5>
                 </div>
               </div>
             </div>

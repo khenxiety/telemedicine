@@ -57,11 +57,9 @@ export class TelemedicineTableComponent implements OnInit {
     
       const pageIndex = (this.selectedPage - 1) * this.pageSize
       this.newDataList = this.dataItems.slice(pageIndex,this.pageSize)
-      console.log(this.newDataList)
-
-      if(!environment.production){
-        console.clear()
-      }
+      // if(!environment.production){
+      //   console.clear()
+      // }
   }
 
   // get pageNumbers():number[]{
@@ -100,14 +98,11 @@ export class TelemedicineTableComponent implements OnInit {
   // }
 
   emitActions(data:any) {
-
     this.actions.emit(data)
-    
   }
 
   confirm() {}
   cancel() {}
-
 
   @HostListener('window: resize', ['$event.target'])
   public onResize(eventTarget: EventTarget): void {
@@ -121,6 +116,5 @@ export class TelemedicineTableComponent implements OnInit {
         this.isMobileView = false;
       }
     }
-    console.log((<Window>eventTarget).innerWidth);
   }
 }

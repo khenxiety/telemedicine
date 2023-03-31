@@ -12,7 +12,8 @@ import {
   query,
   push,
   update,
-  serverTimestamp
+  serverTimestamp,
+  equalTo
 } from '@angular/fire/database';
 import { from, Observable } from 'rxjs';
 
@@ -25,11 +26,6 @@ export class FirebaseService {
   getDataSnapshot(): Observable<any> {
     const dbInstance = ref(this.db, 'data/');
 
-    // return from(
-    //   onValue(dbInstance, (snapshot) => {
-    //     return snapshot.val();
-    //   })
-    // );
     return from(
       get(dbInstance)
         .then((snapshot) => {
@@ -92,7 +88,7 @@ export class FirebaseService {
   }
 
   getSingleDataSnapshot(id: string): Observable<any> {
-    const dbInstance = ref(this.db, `data/${id}`);
+    const dbInstance = ref(this.db, `data/-${id}`);
 
     return from(
       get(dbInstance)
@@ -122,16 +118,16 @@ export class FirebaseService {
     );
   }
 
-  updatePatientData(key: string, data: any) {
-    const dbInstance = ref(this.db, `data/${key}`);
-
-    data.lastModified = new Date().toString()
-
-    return update(dbInstance, data);
+  updatePatientData(key: string, data: any): Promise<void> {
+    const dbInstance = ref(this.db, `data/-${key}`);
+    const modifiedData = { ...data, lastModified: new Date().toString() };
+    return update(dbInstance, modifiedData).catch((err) => {
+      return Promise.reject(err);
+    });
   }
 
   removeData(id: string): Promise<void> {
-    const dbInstance = ref(this.db, `data/${id}`);
+    const dbInstance = ref(this.db, `data/-${id}`);
     return remove(dbInstance);
   }
 
@@ -139,6 +135,38 @@ export class FirebaseService {
     const dbInstance = ref(this.db, 'data/');
     const sortedData = query(dbInstance, orderByChild('date'));
     const filteredData = query(sortedData, startAt(startDate), endAt(endDate));
+    return from(
+      get(filteredData)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            return {
+              status: 200,
+              message: 'success',
+              data: snapshot.val(),
+            };
+          } else {
+            return {
+              status: 400,
+              message: 'No data available',
+              data: undefined,
+            };
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          return {
+            status: 400,
+            message: 'Error',
+            data: error,
+          };
+        })
+    );
+  }
+
+  getDataByName(name: string): Observable<any> {
+    const dbInstance = ref(this.db, 'data/');
+    const sortedData = query(dbInstance, orderByChild('name'));
+    const filteredData = query(sortedData, equalTo(name));
     return from(
       get(filteredData)
         .then((snapshot) => {

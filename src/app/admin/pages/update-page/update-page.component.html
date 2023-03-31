@@ -1,142 +1,153 @@
-<nz-spin [nzSpinning]="isLoading">
+<nz-spin [nzSpinning]="isLoading && !patientData">
 
-  <div class="container-fluid">
+  <div class="container-fluid" *ngIf="!isLoading && !patientData">
+    <div class="row">
+      <div class="col-12">
+        <nz-result nzStatus="error" nzTitle="No record has been found">
+          <div nz-result-extra>
+            <button nz-button nzType="primary" (click)="onBack()">Go Back</button>
+          </div>
+        </nz-result>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid" *ngIf="patientData">
+    <div class="row mb-2">
+      <div class="col-12 d-flex justify-content-between">
+        <a class="p-0 d-flex align-items-center" nz-button nzType="link" (click)="onBack()"><span nz-icon nzType="double-left" nzTheme="outline"></span>{{'Back'}}</a>
+        <a class="d-flex align-items-center" nz-button nzType="link" (click)="exportToPdf()">Export to PDF <span nz-icon nzType="file-pdf" nzTheme="fill"></span></a>
+
+      </div>
+    </div>
     <div class="row mb-4">
       <div class="col-12 d-flex justify-content-between">
         <h2 nz-typography class="h2-responsive font-color-primary mb-0">
-          {{ isLoading ? 'Loading..' : !isUpdating ? updateFormGroup.get('name')?.value : 'Update Record'}}
+          <!-- {{ isLoading ? 'Loading..' : !isUpdating ? updateFormGroup.get('name')?.value : 'Update Record'}} -->
+          {{ 'Patient Record' }}
         </h2>
-        <div class="export d-flex align-items-end">
-          <a class="d-flex align-items-center" nz-button nzType="link">Export to PDF <span nz-icon nzType="file-pdf" nzTheme="fill"></span></a>
-          <!-- <button class="d-flex align-items-center" nz-button nzType="default" nzPrim type="button">Export to PDF <span nz-icon nzType="file-pdf" nzTheme="fill"></span></button> -->
-        </div>
       </div>
     </div>
 
-    <!-- <div class="row my-3 tool-bar">
-    <div class="col-12 d-flex justify-content-end">
-      <div class="export">
-        <button class="d-flex align-items-center" nz-button nzType="default" type="button">Export to PDF <span nz-icon nzType="file-pdf" nzTheme="fill"></span></button>
-      </div>
-      
-     <div class="actions-button d-flex gap-4">
-        <a (click)="onClickUpdate()" class="edit-btn"><span nz-icon nzType="edit" nzTheme="fill"></span></a>
-        <a class="delete-btn"><span nz-icon nzType="delete" nzTheme="fill"></span></a>
-      </div> 
-
-
-    </div>
-  </div> -->
-
-    <div class="row mt-5">
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <!-- <div class="mb-4">
-          <h5>Personal Information</h5>
-        </div> -->
-        <div class="mb-4" *ngIf="isUpdating">
-          <app-telemedicine-admin-input *ngIf="isUpdating" [placeholder]="''" [formGroupParent]="updateFormGroup"
-            [controlName]="'name'" [errorMessage]="'Field cannot be empty'" [label]="'Name'" [type]="'text'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <!-- <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Name :</strong>
-            <span>{{updateFormGroup.get('name')?.value}}</span></div> -->
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'age'" [errorMessage]="'Field cannot be empty'" [label]="'Age'" [type]="'number'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Age :</strong>
-            <span>{{updateFormGroup.get('age')?.value}}</span></div>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'birthdate'" [errorMessage]="'Field cannot be empty'" [label]="'Birthdate'" [type]="'text'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Birthdate :</strong>
-            <span>{{updateFormGroup.get('birthdate')?.value}}</span></div>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'address'" [errorMessage]="'Field cannot be empty'" [label]="'Address'" [type]="'text'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Address :</strong>
-            <span>{{updateFormGroup.get('address')?.value}}</span></div>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'gender'" [errorMessage]="'Field cannot be empty'" [label]="'Gender'" [type]="'text'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Gender :</strong>
-            <span>{{updateFormGroup.get('gender')?.value}}</span></div>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'contactNumber'" [errorMessage]="'Field cannot be empty'" [label]="'Contact'" [type]="'number'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Contact :</strong>
-            <span>{{updateFormGroup.get('contactNumber')?.value}}</span></div>
+    <div class="row" id="record">
+      <div class="row mt-3 ">
+        <div class="col-12">
+          <div class="image">
+            <img nz-image [nzSrc]="patientData ? patientData?.image : 'assets/user.png'" alt="">
+          </div>
         </div>
       </div>
-
-      <div class="col-lg-6 col-md-12 col-sm-12">
-        <!-- <div class="mb-4">
-          <h5>Health Record</h5>
-        </div> -->
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'bloodPressure'" [errorMessage]="'Field cannot be empty'" [label]="'Blood Pressure'"
-            [type]="'text'" [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Blood Pressure :</strong>
-            <span>{{updateFormGroup.get('bloodPressure')?.value}}</span></div>
+      <div class="row mt-5" >
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <div class="mb-4">
+            <h5>Personal Information</h5>
+          </div>
+          <div class="mb-4" >
+            <app-telemedicine-admin-input *ngIf="isUpdating" [placeholder]="''" [formGroupParent]="updateFormGroup"
+              [controlName]="'name'" [errorMessage]="'Field cannot be empty'" [label]="'Name'" [type]="'text'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Name :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('name')?.value">{{updateFormGroup.get('name')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'age'" [errorMessage]="'Field cannot be empty'" [label]="'Age'" [type]="'number'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Age :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('age')?.value">{{updateFormGroup.get('age')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'birthdate'" [errorMessage]="'Field cannot be empty'" [label]="'Birthdate'" [type]="'text'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Birthdate :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('birthdate')?.value">{{updateFormGroup.get('birthdate')?.value }}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'address'" [errorMessage]="'Field cannot be empty'" [label]="'Address'" [type]="'text'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Address :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('address')?.value">{{updateFormGroup.get('address')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'gender'" [errorMessage]="'Field cannot be empty'" [label]="'Gender'" [type]="'text'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Gender :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('gender')?.value">{{updateFormGroup.get('gender')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'contactNumber'" [errorMessage]="'Field cannot be empty'" [label]="'Contact'" [type]="'number'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Contact :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('contactNumber')?.value">{{updateFormGroup.get('contactNumber')?.value}}</span></div>
+          </div>
         </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'heartRate'" [errorMessage]="'Field cannot be empty'" [label]="'Heart rate'" [type]="'number'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Heart rate :</strong>
-            <span>{{updateFormGroup.get('heartRate')?.value}}</span></div>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'temperature'" [errorMessage]="'Field cannot be empty'" [label]="'Temperature'"
-            [type]="'number'" [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Temperature :</strong>
-            <span>{{updateFormGroup.get('temperature')?.value}}</span></div>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'oxygenSaturation'" [errorMessage]="'Field cannot be empty'" [label]="'Oxygen Saturation'"
-            [type]="'text'" [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Oxygen Saturation :</strong>
-            <span>{{updateFormGroup.get('oxygenSaturation')?.value}}</span></div>
-        </div>
-        <div class="mb-4">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'height'" [errorMessage]="'Field cannot be empty'" [label]="'Height'" [type]="'text'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Height :</strong>
-            <span>{{updateFormGroup.get('height')?.value}}</span></div>
-        </div>
-        <div class="mb-2">
-          <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-            [controlName]="'weight'" [errorMessage]="'Field cannot be empty'" [label]="'Weight'" [type]="'number'"
-            [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-          <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Weight :</strong>
-            <span>{{updateFormGroup.get('weight')?.value}}</span></div>
+  
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <div class="mb-4">
+            <h5>Health Record</h5>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'bloodPressure'" [errorMessage]="'Field cannot be empty'" [label]="'Blood Pressure'"
+              [type]="'text'" [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Blood Pressure :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('bloodPressure')?.value">{{updateFormGroup.get('bloodPressure')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'heartRate'" [errorMessage]="'Field cannot be empty'" [label]="'Heart rate'" [type]="'number'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Heart rate :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('heartRate')?.value">{{updateFormGroup.get('heartRate')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'temperature'" [errorMessage]="'Field cannot be empty'" [label]="'Temperature'"
+              [type]="'number'" [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Temperature :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('temperature')?.value">{{updateFormGroup.get('temperature')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'oxygenSaturation'" [errorMessage]="'Field cannot be empty'" [label]="'Oxygen Saturation'"
+              [type]="'text'" [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Oxygen Saturation :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('oxygenSaturation')?.value">{{updateFormGroup.get('oxygenSaturation')?.value}}</span></div>
+          </div>
+          <div class="mb-4">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'height'" [errorMessage]="'Field cannot be empty'" [label]="'Height'" [type]="'text'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Height :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('height')?.value">{{updateFormGroup.get('height')?.value}}</span></div>
+          </div>
+          <div class="mb-2">
+            <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
+              [controlName]="'weight'" [errorMessage]="'Field cannot be empty'" [label]="'Weight'" [type]="'number'"
+              [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Weight :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('weight')?.value">{{updateFormGroup.get('weight')?.value}}</span></div>
+          </div>
         </div>
       </div>
+
     </div>
 
     <div class="row">
       <div class="col-12">
         <div class="mb-1">
-          <small class="text-muted">Date Created: {{ patientData?.date | date }}</small>
+          <small class="text-muted">Date Registered: {{ patientData?.date | date }}</small>
         </div>
         <div class="mb-1">
           <small class="text-muted">Last modified: {{ patientData?.lastModified | date : 'medium' }}</small>
         </div>
         <div class="mb-4 d-flex justify-content-end">
           <button class="me-2" nz-button nzType="default" nzDanger *ngIf="!isUpdating" nz-popconfirm
-          nzPopconfirmTitle="Are you sure delete this data?"
+          nzPopconfirmTitle="Are you sure delete this record?"
           nzPopconfirmPlacement="bottom"
           (nzOnConfirm)="onClickConfirm('delete')"
           (nzOnCancel)="cancelDelete()">Delete</button>
@@ -148,7 +159,7 @@
           <button class="d-flex align-items-center" nz-button nzType="primary" *ngIf="isUpdating"
             (click)="onClickConfirm('update')" [disabled]="isLoading">
             <span nz-icon [nzType]="'loading'" *ngIf="isLoading"></span>
-            <span>{{ !isLoading ? "Confirm" : "Updating" }}</span>
+            <span >{{ !isLoading ? "Confirm" : "Updating" }}</span>
           </button>
 
           

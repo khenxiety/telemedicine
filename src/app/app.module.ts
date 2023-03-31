@@ -39,6 +39,7 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     FormsModule,
     NgZorroModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),

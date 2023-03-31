@@ -8,7 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TelemedicineHeaderComponent } from './components/telemedicine-header/telemedicine-header.component';
 import { TelemedicineFooterComponent } from './components/telemedicine-footer/telemedicine-footer.component';
 import { NgZorroModule } from '../ng-zorro.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImgBgComponent } from './components/img-bg/img-bg.component';
 import { TelemedicineDetailCardsComponent } from './components/telemedicine-detail-cards/telemedicine-detail-cards.component';
 import { TelemedicineInputComponent } from './components/telemedicine-input/telemedicine-input.component';
@@ -30,7 +30,7 @@ const routes: Routes = [
         component: LandingPageComponent,
       },
       {
-        path: 'details',
+        path: 'details/:id',
         component: DetailsPageComponent,
       },
       {
@@ -67,6 +67,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgZorroModule,
     FormsModule,
+    ReactiveFormsModule
   ],
 })
 export class MainModule {}

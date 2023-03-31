@@ -9,9 +9,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BreadcrumbService } from '../../services/breadcrumbs.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { Helper } from 'src/app/helpers/helper.helper';
-import { catchError, Subscription } from 'rxjs';
+import { catchError, Subscription, throwError } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+import { Location } from '@angular/common';
+import { SessionStorage } from 'src/app/enums/enums';
 @Component({
   selector: 'app-update-page',
   templateUrl: './update-page.component.html',
@@ -24,6 +29,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
   public isUpdating: boolean = false;
   
   private ubsubscribeData: Subscription = new Subscription();
+
 
   public updateFormGroup: FormGroup = new FormGroup({
     address: new FormControl('', [Validators.required]),
@@ -47,7 +53,9 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private firebaseService: FirebaseService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private httpClient:HttpClient,
+    private location:Location
   ) {}
 
   async ngOnInit() {
@@ -55,7 +63,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
     this.breadcrumbsService.setTitle({
       relative: 'Dashboard',
       page: 'Manage',
-      childPage: 'Patient Details',
+      childPage: 'Patient Details'
     });
 
     await this.activatedRoute.params.subscribe((res) => {
@@ -70,20 +78,35 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
     }
   }
 
+  onBack():void{
+    this.location.back()
+
+  }
+
   getDataById(): void {
     this.isLoading = true;
-    this.ubsubscribeData = this.firebaseService
-      .getSingleDataSnapshot(this.dataId)
+      this.ubsubscribeData = this.firebaseService
+      .getSingleDataSnapshot(this.dataId) 
       .pipe(
         catchError((err: any) => {
-          throw new Error(err);
+          this.isLoading = false;
+          return throwError(() =>new Error(err));
         })
       )
       .subscribe((response) => {
-        this.patientData = response.data;
-        this.buildFormData(this.patientData);
-        this.isLoading = false;
+        if(response.data){
+          this.patientData = response.data; 
+          this.buildFormData(this.patientData);
+          this.isLoading = false;
+        }
+        else{
+          this.message.error(response.message);
+          this.isLoading = false;
+
+        }
       });
+
+
   }
 
   buildFormData(data: any): void {
@@ -122,16 +145,14 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
 
       return
     }
-    if(action === 'update'){
-      this.updatePatientData()
-      return
-    }
 
-    if(action ==='delete'){
-      this.deletePatientData()
-
-      return 
-
+    switch(action){
+      case 'update':
+        this.updatePatientData()
+        break; 
+      case 'delete':
+        this.deletePatientData()
+        break;
     }
     
   }
@@ -140,6 +161,19 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
 
   }
 
+  exportToPdf(): void {
+    const data = document.getElementById('record')!;
+    html2canvas(data).then(canvas => {
+      const imgWidth = 208;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      pdf.save('filename.pdf');
+    });
+  }
 
   async updatePatientData():Promise<void> {
     this.isLoading = true;
@@ -164,6 +198,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
       const dataRemove = await this.firebaseService.removeData(this.dataId)
       this.message.success('Data deleted successfully');
       this.router.navigate(['/admin/manage'])
+      sessionStorage.removeItem(SessionStorage.Data)
      
       return Promise.resolve(dataRemove)
       

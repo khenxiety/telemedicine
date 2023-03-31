@@ -9,11 +9,14 @@
 
   .patient-details {
     background-color: var(--primary);
+    margin-bottom: 25px;
+
     .header-image {
       display: flex;
       justify-content: center;
     }
   }
+  
 }
 
 .cards {
@@ -24,4 +27,11 @@
 }
 .border-grn {
   border: 2px solid #00918f;
+}
+
+.clear-btn{
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
 }

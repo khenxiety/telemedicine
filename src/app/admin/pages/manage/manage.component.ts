@@ -20,6 +20,9 @@ import { TelemedicineTableComponent } from '../../components/telemedicine-table/
 import { BreadcrumbService } from '../../services/breadcrumbs.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { SessionStorage } from 'src/app/enums/enums';
 interface ColumnItem {
   name: string;
   sortOrder: NzTableSortOrder | null;
@@ -38,6 +41,7 @@ interface DataItem {
   selector: 'app-manage',
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.scss'],
+  providers:[DatePipe]
 })
 export class ManageComponent implements OnInit {
   @ViewChild(TelemedicineTableComponent) telemedicineTable:
@@ -58,6 +62,8 @@ export class ManageComponent implements OnInit {
 
   public newDataList: any[] = []
 
+  public testData:any[]=[]
+
   constructor(
     private firebaseService: FirebaseService,
     private message: NzMessageService,
@@ -65,35 +71,60 @@ export class ManageComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
     private route: ActivatedRoute,
-    private router: Router
-
+    private router: Router,
+    private httpClient:HttpClient,
+    private datePipe: DatePipe
   ) { }
 
-  // @HostListener('scroll', ['$event']) onscroll(event: any) {
-  //   // const container = this.elementRef.nativeElement;
-  //   // const scrollPosition = container.scrollTop;
-  //   const div = this.elementRef.nativeElement.querySelector('#myDiv');
-
-  //   if(div){
-  //   const scrollTop = div.scrollTop;
-
-  //     console.log(scrollTop)
-  //   }
-  // }
-  ngOnInit(): void {
+  async ngOnInit() {
     this.breadcrumbsService.setTitle({
       relative: 'Dashboard',
       page: 'Manage',
     });
     this.loadData();
-    this.route.data.subscribe((res) => {
-      console.log(res);
-    });
-    // this.addMockData();
+    // this.route.data.subscribe((res) => {
+    //   console.log(res);
+    // });
+    // this.getRandomData()
   }
 
   switchView() {
-    this.tableView = this.tableView ? false : true
+    this.tableView = !this.tableView
+  }
+
+  getRandomData(){ //to delete
+    const getData = this.httpClient.get('https://randomuser.me/api/?results=20')
+    getData.subscribe((res:any) =>{
+      res.results.map( (data:any , i:any) =>{
+        this.testData.push({
+
+          address: `${data.location.street.number} ${data.location.street.name}, ${data.location.city} `,
+          age: data.dob.age,
+          birthdate: this.datePipe.transform(data.dob.date , 'dd/MM/yyyy hh:mm a'),
+          bloodPressure: '23/2',
+          contactNumber: data.phone,
+          date: data.registered.date,
+          gender: data.gender,
+          heartRate: 23,
+          height: 34,
+          image: data.picture.large,
+          name: `${data.name.first} ${data.name.last}`,
+          oxygenSaturation: 'bohai2',
+          temperature: 34,
+          weight: 34,
+          lastModified:''
+        })
+      } )
+      this.addMockData();
+    })
+  }
+
+  addMockData() {
+    this.testData.forEach(res =>{
+      this.firebaseService.addData(res).then((res) => {
+        console.log(res, 'success');
+      });
+    })
   }
 
   // get pageNumbers():number[]{
@@ -133,7 +164,7 @@ export class ManageComponent implements OnInit {
 
   loadData(reload?: boolean) {
     this.isLoading = true;
-    const check = sessionStorage.getItem('recipes');
+    const check = sessionStorage.getItem(SessionStorage.Data);
     if (check && !reload) {
       this.data = JSON.parse(check);
       this.setColumns(this.data);
@@ -141,7 +172,7 @@ export class ManageComponent implements OnInit {
     } else {
       this.firebaseService.getDataRealtime().subscribe((res) => {
         this.data = Helper.toArrayObjects(res);
-        sessionStorage.setItem('recipes', JSON.stringify(this.data));
+        sessionStorage.setItem(SessionStorage.Data, JSON.stringify(this.data));
         this.setColumns(this.data);
         setTimeout(() => {
           this.isLoading = false;
@@ -162,7 +193,6 @@ export class ManageComponent implements OnInit {
           return { text: res?.name, value: res?.name };
         }),
         filterFn: (list: string[], item: DataItem) => {
-          console.log(list);
           return list.some((name) => item.name.indexOf(name) !== -1);
         },
       },
@@ -202,7 +232,7 @@ export class ManageComponent implements OnInit {
 
   public refresh(): void {
     this.data = [];
-    sessionStorage.clear();
+    sessionStorage.removeItem(SessionStorage.Data);
     this.date = []
     this.loadData(true);
     this.telemedicineTable?.ngOnInit()
@@ -211,7 +241,6 @@ export class ManageComponent implements OnInit {
   }
 
   public datePick(event: any): void {
-    console.log(event);
     this.date = event;
   }
 
@@ -226,38 +255,15 @@ export class ManageComponent implements OnInit {
         .subscribe((res) => {
           this.data = Helper.toArrayObjects(res);
           this.telemedicineTable?.ngOnInit()
-
           this.isLoading = false;
 
         });
     } else {
-      console.log('please select a date');
+      this.message.info('Please select a date')
     }
   }
 
-  addMockData() {
-    for (let i = 0; i < 15; i++) {
-      const data = {
-        address: `${i} floor, Buendia, Pasay Metro Manila`,
-        age: 25,
-        birthdate: '08-31-1999',
-        bloodPressure: '23/2',
-        contactNumber: '09999706684',
-        date: `2023-03-${i < 9 ? '0' + i.toString() : i}`,
-        gender: 'male',
-        heartRate: 23,
-        height: 34,
-        image: 'insert image blob here',
-        name: `testData${i}`,
-        oxygenSaturation: 'bohai2',
-        temperature: 34,
-        weight: 34,
-      };
-      this.firebaseService.addData(data).then((res) => {
-        console.log(res, 'success');
-      });
-    }
-  }
+
 
 
   async onClickActions(event: any) {
@@ -271,7 +277,7 @@ export class ManageComponent implements OnInit {
         break;
 
       case 'update':
-        this.router.navigate(['admin/manage/update-data', event.id]);
+        this.router.navigate(['admin/manage/update-data', event.id.replace('-' ,'')]);
         break;
     }
   }

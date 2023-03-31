@@ -2,22 +2,44 @@
     <nz-list-item *ngFor="let item of dataItems">
       <ng-container *ngIf="!isSpinning">
         <nz-list-item-meta
-          nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          [nzDescription]="item.address"
+          [nzAvatar]="item?.image"
+          [nzDescription]="item?.address"
+          nzEllipsis
         >
           <nz-list-item-meta-title>
-            <a href="https://ng.ant.design">{{ item.name }}</a>
+            <a href="https://ng.ant.design">{{ item?.name }}</a>
           </nz-list-item-meta-title>
         </nz-list-item-meta>
-        {{ item.gender }}
         <ul nz-list-item-actions>
-          <nz-list-item-action><a (click)="emitActions({action:'update',id:item?.id})">View</a></nz-list-item-action>
+          <nz-list-item-action><a (click)="emitActions({action:'update',id:item?.id})">
+            <span *ngIf="!isMobileView">View</span>
+            <span
+                nz-icon
+                nzType="edit"
+                nzTheme="fill"
+                *ngIf="isMobileView"
+              ></span>
+          </a></nz-list-item-action>
           <nz-list-item-action><a class=" disable-user-select"
             nz-popconfirm
             nzPopconfirmTitle="Are you sure delete this data?"
             nzPopconfirmPlacement="bottom"
             (nzOnConfirm)="emitActions({action:'delete',id:item?.id})"
-            (nzOnCancel)="cancel()" >Delete</a></nz-list-item-action>
+            (nzOnCancel)="cancel()" >
+            <span *ngIf="!isMobileView">Delete</span>
+
+            <span
+                nz-icon
+                nzType="delete"
+                nzTheme="fill"
+                *ngIf="isMobileView"
+              ></span>
+          
+          
+          </a>
+          
+          
+          </nz-list-item-action>
         </ul>
       </ng-container>
       <nz-skeleton

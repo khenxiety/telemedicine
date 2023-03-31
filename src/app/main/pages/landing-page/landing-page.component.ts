@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -6,27 +10,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent implements OnInit {
-  // inputText: string = '';
-  // keywords: string[] = [];
+  inputText: string = '';
 
-  constructor() {}
+  public formGroup: FormGroup = new FormGroup({
+    search : new FormControl('', Validators.required)
+  })
+  
 
-  ngOnInit(): void {}
+  constructor(private firebaseService:FirebaseService, private router:Router, private message:NzMessageService) {}
 
-  // generateRandomKeywords() {
-  //   const inputArray = this.inputText.split(' ');
+  ngOnInit(): void {
+  }
 
-  //   this.keywords = [];
+  getDataByName():void{
+    if(!this.formGroup.valid){
+      this.message.error('Please enter patient name')
+      return
+    }
 
-  //   for (let i = 0; i < 10; i++) {
-  //     let keyword = '';
-  //     inputArray.forEach((word) => {
-  //       const randomIndex = Math.floor(Math.random() * word.length);
-  //       keyword += word[randomIndex].toUpperCase() + word.slice(1);
-  //     });
-  //     this.keywords.push(keyword);
-  //   }
-
-  //   console.log(this.keywords);
-  // }
+    
+    this.firebaseService.getDataByName(this.formGroup.get('search')?.value).subscribe(res =>{
+      if(!res.data){
+        this.message.error(`No record found for ${this.formGroup.get('search')?.value}` )
+        return
+      }
+      this.router.navigate(['details/',Object.keys(res.data)[0].replace('-','')])
+    })
+  }
+  
 }
