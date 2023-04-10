@@ -63,20 +63,24 @@ export class ManageComponent implements OnInit {
   public newDataList: any[] = []
 
   public testData:any[]=[]
+  public isMobileView: boolean = false;
+
 
   constructor(
     private firebaseService: FirebaseService,
     private message: NzMessageService,
     private breadcrumbsService: BreadcrumbService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private elementRef: ElementRef,
-    private route: ActivatedRoute,
     private router: Router,
     private httpClient:HttpClient,
     private datePipe: DatePipe
   ) { }
 
   async ngOnInit() {
+    this.isMobileView = window.innerWidth < 767;
+    if(this.isMobileView){
+      this.tableView = false
+    }
+
     this.breadcrumbsService.setTitle({
       relative: 'Dashboard',
       page: 'Manage',
@@ -86,6 +90,7 @@ export class ManageComponent implements OnInit {
     //   console.log(res);
     // });
     // this.getRandomData()
+
   }
 
   switchView() {
@@ -271,7 +276,7 @@ export class ManageComponent implements OnInit {
 
     switch (event.action) {
       case 'delete':
-        await this.firebaseService.removeData(event.id)
+        await this.firebaseService.removeData(event.id.replace('-',''))
         this.message.success('Data deleted successfully');
         this.refresh();
         break;
@@ -280,5 +285,23 @@ export class ManageComponent implements OnInit {
         this.router.navigate(['admin/manage/update-data', event.id.replace('-' ,'')]);
         break;
     }
+  }
+
+
+  public onResize(eventTarget: EventTarget): void {
+    if ((<Window>eventTarget).innerWidth < 767) {
+      if (!this.isMobileView) {
+        this.isMobileView = true;
+        this.tableView = false
+      }
+    }
+    if ((<Window>eventTarget).innerWidth >= 767) {
+      if (this.isMobileView) {
+        this.isMobileView = false;
+        this.tableView = true
+
+      }
+    }
+    console.log((<Window>eventTarget).innerWidth);
   }
 }

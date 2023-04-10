@@ -1,17 +1,17 @@
 <app-img-bg></app-img-bg>
 <div class="page-wrapper section-1">
   <div class="container" style="min-height: calc(100vh - 30px)">
-    <div class="row">
+    <div class="row login" >
       <div class="col-lg-5 col-md-5 col-sm-12">
         <div class="card px-5 py-5" [class.mt-4]="isMobileView">
-          <form action="">
+          <form action="" class="login-form" *ngIf="!isSignup" [formGroup]="loginFormGroup">
             <div class="mb-2 text-container">
               <h2 class="font-color-primary h2-responsive">
                 Log<span class="font-color-secondary">in</span>
               </h2>
               <p class="font-color-primary">
                 Don’t have an account yet?
-                <a href="" class="font-color-secondary">Sign up</a>
+                <a (click)="isSignup = true" class="font-color-secondary">Sign up</a>
               </p>
             </div>
             <div class="mb-2">
@@ -40,9 +40,11 @@
                   <nz-input-group nzPrefixIcon="mail">
                     <input
                       class="inputs round"
-                      type="text"
+                      type="email"
                       nz-input
                       placeholder="Email"
+                      formControlName="email"
+
                     />
                   </nz-input-group>
                 </nz-form-control>
@@ -57,19 +59,68 @@
                       type="password"
                       nz-input
                       placeholder="Password"
+                      formControlName="password"
                     />
                   </nz-input-group>
                 </nz-form-control>
               </nz-form-item>
             </div>
             <div class="mb-2">
-              <button
-                class="button-ggl primary round"
-                nzType="primary"
-                nz-button
-                nzBlock
-              >
-                Login with email
+              <button class="button-ggl primary round d-flex align-items-center" nzBlock nz-button nzType="primary"
+              (click)="onClick('login')"  [disabled]="isLoading">
+                <span nz-icon [nzType]="'loading'" *ngIf="isLoading"></span>
+                <span >{{ !isLoading ? "Login with email" : "Logging in" }}</span>
+              </button>
+            </div>
+          </form>
+
+          <form action="" [formGroup]="signupFormGroup" class="signup" *ngIf="isSignup">
+            <div class="mb-2 text-container">
+              <h2 class="font-color-primary h2-responsive">
+                Sign<span class="font-color-secondary">up</span>
+              </h2>
+              <p class="font-color-primary">
+                Already registered?
+                <a (click)="isSignup = false" class="font-color-secondary">Login here</a>
+              </p>
+            </div>
+
+            <div class="mb-2" *ngFor="let sign of signupArray; let i = index">
+              <nz-form-item [ngClass]="i == 5 && signupFormGroup.get('password')?.valid ? 'mb-0' :''">
+                <nz-form-control  [nzErrorTip]="sign.errorTip">
+                  <nz-input-group [nzPrefixIcon]="sign.icon">
+                    <input
+                      class="inputs round"
+                      [type]="sign.type"
+                      nz-input
+                      [placeholder]="sign.placeholder"
+                      [formControlName]="sign.controlName"
+                    />
+                    
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+              <div class="progressPassword mt-1" *ngIf="i ==5 && signupFormGroup.get('password')?.valid">
+                <span style="font-weight: 600; font-size: 13px;" nz-typography [nzType]="textClass.split('|')[1]">
+                  {{progressText}}
+
+                  <span style="font-weight: 400">
+
+                    {{progressHintText}}
+                  </span>
+                  
+                </span>
+                <nz-progress [nzPercent]="progressValue" [nzStatus]="textClass.split('|')[0]"></nz-progress>
+              </div>
+
+              
+            </div>
+            <div class="mb-2">
+              
+              <button class="button-ggl primary round d-flex align-items-center" nzBlock nz-button nzType="primary"
+              (click)="onClick('signup')"  [disabled]="isLoading">
+                <span nz-icon [nzType]="'loading'" *ngIf="isLoading"></span>
+                <span >{{ !isLoading ? "Sign up" : "Signing up" }}</span>
               </button>
             </div>
           </form>
@@ -80,12 +131,14 @@
           class="hero-logo"
           width="100%"
           height="100%"
-          style="object-fit: cover;"
+          style="object-fit: cover; max-height: 533px;"
           src="./assets/login logo.png"
           alt=""
         />
       </div>
     </div>
+
+    
   </div>
 </div>
 

@@ -1,4 +1,5 @@
 import { Component, OnInit,HostListener } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { Router, NavigationEnd } from '@angular/router';
 @Component({
   selector: 'app-telemedicine-header',
@@ -41,12 +42,14 @@ export class TelemedicineHeaderComponent implements OnInit {
   ];
   public isMobileView: boolean = false;
   public navScroll: boolean = false;
-  constructor(private router: Router) {
+  constructor(private router: Router,private auth:Auth) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
       }
     });
+    
+    
   }
 
   @HostListener('window:scroll', ['$event']) onscroll() {
@@ -75,5 +78,36 @@ export class TelemedicineHeaderComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.currentRoute);
     this.isMobileView = window.innerWidth < 767;
+  //   if(this.auth.currentUser == null){
+  //     this.headerElement = [
+        
+  //       {
+  //         title: 'about us',
+  //         route: '/none',
+  //         icon: 'info-circle',
+  //         fill: 'fill',
+  //       },
+  //       {
+  //         title: 'features',
+  //         route: '/none',
+  //         icon: 'appstore',
+  //         fill: 'fill',
+  //       },
+  //       {
+  //         title: 'contact',
+  //         route: '/none',
+  //         icon: 'phone',
+  //         fill: 'fill',
+  //       },
+  //       {
+  //         title: 'login',
+  //         route: '/login',
+  //         icon: 'login',
+  //         fill: 'outline',
+  //       },
+  //     ]
+  // }else{
+    
+  // }
   }
 }

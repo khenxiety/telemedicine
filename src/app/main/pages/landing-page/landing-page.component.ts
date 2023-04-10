@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -17,9 +18,18 @@ export class LandingPageComponent implements OnInit {
   })
   
 
-  constructor(private firebaseService:FirebaseService, private router:Router, private message:NzMessageService) {}
+  constructor(private firebaseService:FirebaseService, private router:Router, private message:NzMessageService,private auth:Auth) {
 
-  ngOnInit(): void {
+    
+  }
+
+  async ngOnInit() {
+    // const currentUser = await this.auth.currentUser
+    
+    // if(currentUser == null){
+
+    //   this.router.navigate(['/**'])
+    // }
   }
 
   getDataByName():void{
