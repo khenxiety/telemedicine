@@ -1,7 +1,7 @@
 <nz-form-item>
-    <nz-form-control  nzHasFeedback [nzErrorTip]="errorMessage">
+    <nz-form-control  nzHasFeedback [nzErrorTip]="errorMessage" [formGroup]="formGroupParent">
       <nz-textarea-count [nzMaxCharacterCount]="2000">
-        <textarea class="text-area w-100" nz-input rows="2" [placeholder]="placeholder"></textarea>
+        <textarea class="text-area w-100" nz-input rows="2" [formControlName]="controlName" [placeholder]="placeholder"></textarea>
       </nz-textarea-count>
     </nz-form-control>
 </nz-form-item>

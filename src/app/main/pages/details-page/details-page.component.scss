@@ -35,3 +35,30 @@
   border: none;
   background-color: transparent;
 }
+.search-grp {
+  background-color: var(--secondary);
+  border-radius: 10px;
+  padding: 5px;
+  .search-input {
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+  }
+  button {
+    height: 45px;
+    width: 45px;
+    
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+  }
+}
+.date-picker-container{
+  .date-picker{
+    border-radius: 10px;
+
+    padding: 5px;
+    width: max-content;
+    background-color: var(--secondary);
+  
+  }
+}

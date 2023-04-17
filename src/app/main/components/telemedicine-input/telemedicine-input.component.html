@@ -1,7 +1,7 @@
 <nz-form-item>
     <nz-form-control [nzErrorTip]="errorMessage">
-      <nz-input-group [nzPrefixIcon]="icon">
-        <input class="inputs " [class.round]="isRound" [type]="type" nz-input [placeholder]="placeholder" />
+      <nz-input-group [nzPrefixIcon]="icon" [formGroup]="formGroupParent">
+        <input class="inputs " [class.round]="isRound" [type]="type" nz-input [formControlName]="controlName" [placeholder]="placeholder" />
       </nz-input-group>
     </nz-form-control>
 </nz-form-item>

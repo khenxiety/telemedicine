@@ -9,5 +9,9 @@ export const environment = {
     messagingSenderId: '82380482432',
     measurementId: 'G-LV3WD9ZVLJ',
   },
-  production: true
+  production: true,
+  emailJs:{
+    serviceId:'service_691qh98',
+    templateId:'template_av5a8kq'
+  }
 };

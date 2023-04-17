@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Helper } from 'src/app/helpers/helper.helper';
 import { RefreshService } from 'src/app/services/common/refresh.service';
+import { EmailjsService } from 'src/app/services/emailjs.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UserAuthService } from 'src/app/services/registration.service';
 
@@ -38,13 +39,7 @@ export class LoginComponent implements OnInit {
       errorTip: 'Please enter your Lastname',
       icon: 'user',
     },
-    {
-      controlName: 'licenseNumber',
-      placeholder: 'License number',
-      type: 'text',
-      errorTip: '',
-      icon: 'number',
-    },
+    
     {
       controlName: 'email',
       placeholder: 'Email',
@@ -78,7 +73,6 @@ export class LoginComponent implements OnInit {
   public signupFormGroup: FormGroup = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    licenseNumber: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     number: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
@@ -100,7 +94,7 @@ export class LoginComponent implements OnInit {
     private registrationService: UserAuthService,
     private router: Router,
     private auth: Auth,
-    private refresherService: RefreshService
+    private refresherService: RefreshService,
   ) {}
 
   ngOnInit(): void {

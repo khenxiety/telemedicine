@@ -32,7 +32,7 @@ export class TelemedicineHeaderComponent implements OnInit {
     },
     {
       title: 'contact',
-      route: '/none',
+      route: '/contact',
       icon: 'phone',
       fill: 'fill',
     },
@@ -113,7 +113,7 @@ export class TelemedicineHeaderComponent implements OnInit {
         },
         {
           title: 'contact',
-          route: '/none',
+          route: '/contact',
           icon: 'phone',
           fill: 'fill',
         },
@@ -149,7 +149,7 @@ export class TelemedicineHeaderComponent implements OnInit {
       },
       {
         title: 'contact',
-        route: '/none',
+        route: '/contact',
         icon: 'phone',
         fill: 'fill',
       },
@@ -181,7 +181,6 @@ export class TelemedicineHeaderComponent implements OnInit {
       return;
     }
 
-    console.log(action);
     this.router.navigate([action]);
   }
 }

@@ -14,6 +14,10 @@ export const environment = {
     measurementId: 'G-LV3WD9ZVLJ',
   },
   production: false,
+  emailJs:{
+    serviceId:'service_691qh98',
+    templateId:'template_av5a8kq'
+  }
 };
 
 // {

@@ -4,15 +4,18 @@
       <div class="col-lg-8">
         <div class="container-header">
           <div class="mb-4">
-            <h2 class="header-text h2-responsive font-color-primary">PATIENT <span class="font-color-secondary">DETAILS</span> </h2>
+            <h1 class="header-text h1-responsive font-color-primary" style="font-weight: 600;">PATIENT <span class="font-color-secondary">DETAILS</span> </h1>
           </div>
           <div class="mb-5">
-            <div class="date-picker">
-              <nz-date-picker
-                style="min-width: 300px"
+            <div class="date-picker-container">
+              <div class="date-picker">
+                <nz-date-picker
+                style="min-width: 300px; border-radius:10px; height: 45px;"
                 [(ngModel)]="date"
                 (ngModelChange)="onChange($event)"
               ></nz-date-picker>
+              </div>
+              
             </div>
           </div>
         </div>
@@ -79,17 +82,25 @@
         <div class="row mb-5">
           <div class="col">
             <div class="search-input">
-              <nz-input-group [formGroup]="formGroup" [nzSuffix]="suffixIconSearch">
-                <input type="text" nz-input placeholder="input search text" formControlName="search" />
-              </nz-input-group>
-              <ng-template #suffixIconSearch>
-                <button class="clear-btn" (click)="onSearch()">
-                  
-                <span nz-icon nzType="search"></span>
-
-                </button>
-
-              </ng-template>
+              
+              <div class="search-grp">
+                <nz-input-group [formGroup]="formGroup" nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+                  <input
+                    type="text"
+                    class="search-input"
+                    nz-input
+                    placeholder="Enter patients name eg. Juan Dela Cruz"
+                    name="inputText"
+                    formControlName="search"
+                    
+                  />
+                </nz-input-group>
+                <ng-template #suffixButton>
+                  <button nz-button nzType="primary" nzSearch (click)="onSearch()" >
+                    <img width="100%" height="60%" style="aspect-ratio:1/1; object-fit: contain;" src="./assets/search.png" alt="">
+                  </button>
+                </ng-template>
+              </div> 
             </div>
           </div>
         </div>

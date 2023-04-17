@@ -1,4 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-telemedicine-text-area',
@@ -7,7 +8,9 @@ import { Component, OnInit,Input } from '@angular/core';
 })
 export class TelemedicineTextAreaComponent implements OnInit {
   @Input() public placeholder:string =''
-  @Input() public formControlName:string =''
+  @Input() public controlName:string =''
+  @Input() public formGroupParent:FormGroup =new FormGroup({})
+
   @Input() public errorMessage:string =''
   @Input() public icon:string =''
   @Input() public type:string =''

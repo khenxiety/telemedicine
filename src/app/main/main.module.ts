@@ -15,6 +15,8 @@ import { TelemedicineInputComponent } from './components/telemedicine-input/tele
 import { TelemedicineTextAreaComponent } from './components/telemedicine-text-area/telemedicine-text-area.component';
 import { ImgFooterComponent } from './components/img-footer/img-footer.component';
 import { EmptyPageComponent } from '../empty-page/empty-page.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 
 const routes: Routes = [
   {
@@ -28,6 +30,10 @@ const routes: Routes = [
       {
         path: 'search',
         component: LandingPageComponent,
+      },
+      {
+        path: 'contact',
+        component: ContactPageComponent,
       },
       {
         path: 'details/:id',
@@ -60,6 +66,8 @@ const routes: Routes = [
     TelemedicineInputComponent,
     TelemedicineTextAreaComponent,
     ImgFooterComponent,
+    ContactFormComponent,
+    ContactPageComponent,
   ],
   exports: [TelemedicineInputComponent],
   imports: [

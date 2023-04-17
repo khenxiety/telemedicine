@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EmailJSResponseStatus } from '@emailjs/browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { RefreshService } from 'src/app/services/common/refresh.service';
+import { EmailjsService } from 'src/app/services/emailjs.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
@@ -23,7 +25,8 @@ export class LandingPageComponent implements OnInit {
     private router: Router,
     private message: NzMessageService,
     private auth: Auth,
-    private refresherService: RefreshService
+    private refresherService: RefreshService,
+    private emailService:EmailjsService
   ) {}
 
   async ngOnInit() {
@@ -63,4 +66,6 @@ export class LandingPageComponent implements OnInit {
         ]);
       });
   }
+
+  
 }
