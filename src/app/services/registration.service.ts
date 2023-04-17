@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
-import { createUserWithEmailAndPassword ,Auth, updateProfile, signInWithEmailAndPassword} from '@angular/fire/auth';
 import {
-  child,
+  createUserWithEmailAndPassword,
+  Auth,
+  updateProfile,
+  signInWithEmailAndPassword,
+} from '@angular/fire/auth';
+import {
   Database,
   get,
-  onValue,
   orderByChild,
   ref,
-  remove,
-  startAt,
-  endAt,
   query,
   push,
-  update,
-  serverTimestamp,
-  equalTo
+  equalTo,
 } from '@angular/fire/database';
 import { from, Observable } from 'rxjs';
 @Injectable({
@@ -72,11 +70,9 @@ export class UserAuthService {
       const verification = await this.roleVerification(data.value.email);
 
       if (verification && verification.type === 'user') {
-        
         return { status: 200, message: 'Login Successfully', data: loginUser };
       } else {
-
-        this.userLogout()
+        this.userLogout();
         throw { status: 'error', code: 'User does not exist' };
       }
     } catch (error: any) {
@@ -103,16 +99,12 @@ export class UserAuthService {
     }
   }
 
-
-  async userLogout():Promise<any>{
+  async userLogout(): Promise<any> {
     try {
-      const signout = await this.authService.signOut()
-      return signout
+      const signout = await this.authService.signOut();
+      return signout;
     } catch (error) {
       return Promise.reject(error);
-      
     }
-
-    
   }
 }

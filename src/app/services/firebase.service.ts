@@ -13,15 +13,16 @@ import {
   push,
   update,
   serverTimestamp,
-  equalTo
+  equalTo,
 } from '@angular/fire/database';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
-  constructor(private db: Database) {}
+  constructor(private db: Database, private message: NzMessageService) {}
 
   getDataSnapshot(): Observable<any> {
     const dbInstance = ref(this.db, 'data/');
@@ -185,11 +186,12 @@ export class FirebaseService {
           }
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error.message);
+
           return {
             status: 400,
-            message: 'Error',
-            data: error,
+            message: error.message,
+            data: null,
           };
         })
     );

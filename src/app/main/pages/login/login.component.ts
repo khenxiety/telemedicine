@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Helper } from 'src/app/helpers/helper.helper';
+import { RefreshService } from 'src/app/services/common/refresh.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UserAuthService } from 'src/app/services/registration.service';
 
@@ -98,14 +99,21 @@ export class LoginComponent implements OnInit {
     private message: NzMessageService,
     private registrationService: UserAuthService,
     private router: Router,
-    private auth:Auth
+    private auth: Auth,
+    private refresherService: RefreshService
   ) {}
 
   ngOnInit(): void {
+    if (this.auth.currentUser != null) {
+      this.router.navigate(['/search']);
+      return;
+    }
     this.isMobileView = window.innerWidth < 767;
     this.getContactsData();
     this.passwordStrenthChecker();
-    console.log(this.auth)
+    console.log(this.auth);
+
+    // this.registrationService.userLogout();
   }
 
   getContactsData(): void {
@@ -182,11 +190,12 @@ export class LoginComponent implements OnInit {
         this.loginFormGroup
       );
 
-      console.log(login,this.auth)
+      console.log(login, this.auth);
       if (login.status === 200) {
         this.signupFormGroup.reset();
         this.isLoading = false;
         this.isSignup = false;
+        this.refresherService.refresh.next();
         this.message.success(login.message);
         this.router.navigate(['/search']);
       }

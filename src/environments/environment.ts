@@ -13,10 +13,40 @@ export const environment = {
     messagingSenderId: '82380482432',
     measurementId: 'G-LV3WD9ZVLJ',
   },
-  production: false
+  production: false,
 };
 
+// {
+//   "rules": {
+//     ".read": "true",
+//     ".write": "true",
+//     "data": {
+//       ".indexOn": ["date","name"],
 
+//     },
+//     "users": {
+//       ".indexOn": ["email"],
+
+//     }
+//   }
+// }
+//{
+//"rules": {
+// ".read": "auth != null",
+// ".write": "auth != null",
+//"$uid": {
+// ".write": "$uid === auth.uid"
+//},
+// "data": {
+//   ".indexOn": ["date","name"],
+
+//  },
+//  "users": {
+//   ".indexOn": ["email"],
+
+// }
+// }
+//}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

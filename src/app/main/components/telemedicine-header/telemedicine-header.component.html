@@ -1,4 +1,7 @@
-<header  (scroll)="onscroll()" [ngClass]="navScroll || currentRoute=='/search' ? 'colored shadow': ''">
+<header
+  (scroll)="onscroll()"
+  [ngClass]="navScroll || currentRoute == '/search' ? 'colored shadow' : ''"
+>
   <div class="container">
     <div class="nav w-100">
       <div class="logo d-flex align-items-center">
@@ -19,25 +22,42 @@
         <li
           *ngFor="let element of headerElement"
           class="me-4"
-          [routerLink]="element.route"
+          (click)="menuAction(element.route)"
           routerLinkActive="active"
+          [ngClass]="currentRoute == element.route ? 'active' : ''"
         >
-          <a [routerLink]="element.route">{{ element.title }}</a>
+          <a (click)="menuAction(element.route)">{{ element.title }}</a>
         </li>
       </ul>
 
       <div class="mobile-view" *ngIf="isMobileView">
-
         <a nz-dropdown [nzDropdownMenu]="menu">
           <span nz-icon nzType="menu-fold" nzTheme="outline"></span>
         </a>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul nz-menu>
             <li nz-menu-item *ngFor="let element of headerElement">
-              <a class="font-color-primary d-flex align-items-center" [routerLink]="element.route" routerLinkActive="font-color-secondary" style="font-weight: 600; ">
-                <span nz-icon [nzType]="element.icon" [nzTheme]="element.fill" class="me-3"></span>
+              <a
+                class="font-color-primary d-flex align-items-center"
+                [routerLink]="element.route"
+                routerLinkActive="font-color-secondary"
+                style="font-weight: 600"
+              >
+                <span
+                  nz-icon
+                  [nzType]="element.icon"
+                  [nzTheme]="element.fill"
+                  class="me-3"
+                ></span>
                 {{ element.title.toUpperCase() }}
               </a>
+            </li>
+            <li *ngIf="isLoggedIn" nz-menu-item>
+              <a
+                class="font-color-primary d-flex align-items-center"
+                style="font-weight: 600"
+                >Logout</a
+              >
             </li>
           </ul>
         </nz-dropdown-menu>
