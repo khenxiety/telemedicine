@@ -25,8 +25,14 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { mainModule } from 'process';
 import { MainModule } from './main/main.module';
 import { EmptyPageComponent } from './empty-page/empty-page.component';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
 registerLocaleData(en);
+export function tokenGetter() {
+  const {user:{stsTokenManager:{ accessToken:token}}} = JSON.parse(localStorage.getItem('user')!);
+
+  return  token;
+}
 
 @NgModule({
   declarations: [AppComponent, EmptyPageComponent],
@@ -45,11 +51,17 @@ registerLocaleData(en);
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideStorage(() => getStorage()),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+      },
+    }),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     ScreenTrackingService,
     UserTrackingService,
+    JwtHelperService
   ],
   bootstrap: [AppComponent],
 })

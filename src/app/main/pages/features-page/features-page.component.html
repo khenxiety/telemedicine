@@ -1,0 +1,31 @@
+<app-img-bg></app-img-bg>
+<div class="page-wrapper section-1">
+    <div class="container" style="min-height: calc(100vh - 30px)">
+        <div class="row py-5">
+            <div class="col">
+                <h1 class="font-color-secondary">FEATURES</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let data of features">
+                <div class="card ">
+                    <div class="card-image">
+                        <img src="{{data.image}}" alt="">
+                    </div>
+
+                    <div class="card-content text-center">
+                        <h4 class="h4-responsive font-color-primary">{{data.title}}</h4>
+
+                        <p class="">{{data.description}}</p>
+
+                        <a href="{{data.link}}" class="font-color-secondary ">HOW TO USE</a>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</div>

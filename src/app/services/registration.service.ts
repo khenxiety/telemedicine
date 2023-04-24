@@ -15,11 +15,12 @@ import {
   equalTo,
 } from '@angular/fire/database';
 import { from, Observable } from 'rxjs';
+import { LocalstorageService } from './localstorage/localstorage.service';
 @Injectable({
   providedIn: 'root',
 })
 export class UserAuthService {
-  constructor(private db: Database, private authService: Auth) {}
+  constructor(private db: Database, private authService: Auth, private localStorageService:LocalstorageService) {}
 
   async userSignup(data: any): Promise<any> {
     try {
@@ -102,6 +103,7 @@ export class UserAuthService {
   async userLogout(): Promise<any> {
     try {
       const signout = await this.authService.signOut();
+      this.localStorageService.removeItem('user')
       return signout;
     } catch (error) {
       return Promise.reject(error);

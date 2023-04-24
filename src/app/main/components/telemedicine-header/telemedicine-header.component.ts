@@ -1,12 +1,15 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { Router, NavigationEnd } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { RefreshService } from 'src/app/services/common/refresh.service';
+import { LocalstorageService } from 'src/app/services/localstorage/localstorage.service';
 import { UserAuthService } from 'src/app/services/registration.service';
 @Component({
   selector: 'app-telemedicine-header',
   templateUrl: './telemedicine-header.component.html',
   styleUrls: ['./telemedicine-header.component.scss'],
+  providers:[NzMessageService]
 })
 export class TelemedicineHeaderComponent implements OnInit {
   currentRoute: string = '';
@@ -26,13 +29,13 @@ export class TelemedicineHeaderComponent implements OnInit {
     },
     {
       title: 'features',
-      route: '/none',
+      route: '/about-us',
       icon: 'appstore',
       fill: 'fill',
     },
     {
       title: 'contact',
-      route: '/contact',
+      route: '/features',
       icon: 'phone',
       fill: 'fill',
     },
@@ -49,7 +52,9 @@ export class TelemedicineHeaderComponent implements OnInit {
     private router: Router,
     private auth: Auth,
     private refresherService: RefreshService,
-    private authenticationService: UserAuthService
+    private authenticationService: UserAuthService,
+    private localStorageService:LocalstorageService,
+    private message:NzMessageService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -85,11 +90,11 @@ export class TelemedicineHeaderComponent implements OnInit {
     console.log((<Window>eventTarget).innerWidth);
   }
 
-  ngOnInit(): void {
-    console.log('refreshed');
-    console.log(this.auth.currentUser);
+  async ngOnInit() {
     this.isMobileView = window.innerWidth < 767;
-    if (this.auth.currentUser != null) {
+    const getUser = await this.localStorageService.getItem('user')
+    console.log(getUser)
+    if (getUser) {
       this.setIsUserLoggedIn();
     } else {
       this.headerElement = [
@@ -101,13 +106,13 @@ export class TelemedicineHeaderComponent implements OnInit {
         },
         {
           title: 'about us',
-          route: '/none',
+          route: '/about-us',
           icon: 'info-circle',
           fill: 'fill',
         },
         {
           title: 'features',
-          route: '/none',
+          route: '/features',
           icon: 'appstore',
           fill: 'fill',
         },
@@ -137,13 +142,13 @@ export class TelemedicineHeaderComponent implements OnInit {
       },
       {
         title: 'about us',
-        route: '/none',
+        route: '/about-us',
         icon: 'info-circle',
         fill: 'fill',
       },
       {
         title: 'features',
-        route: '/none',
+        route: '/features',
         icon: 'appstore',
         fill: 'fill',
       },
@@ -165,19 +170,16 @@ export class TelemedicineHeaderComponent implements OnInit {
     console.log(this.isLoggedIn);
   }
 
-  async menuAction(action: string): Promise<any> {
+  async menuAction(action: string){
     if (action === 'logout') {
-      console.log('logged out');
-
       try {
         const logout = await this.authenticationService.userLogout();
+        this.message.success('Logged out successfully');
         this.router.navigate(['/login']);
         this.ngOnInit();
-        console.log(logout);
       } catch (error) {
         console.error(error);
       }
-
       return;
     }
 

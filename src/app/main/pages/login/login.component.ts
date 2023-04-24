@@ -7,6 +7,7 @@ import { Helper } from 'src/app/helpers/helper.helper';
 import { RefreshService } from 'src/app/services/common/refresh.service';
 import { EmailjsService } from 'src/app/services/emailjs.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { LocalstorageService } from 'src/app/services/localstorage/localstorage.service';
 import { UserAuthService } from 'src/app/services/registration.service';
 
 @Component({
@@ -95,9 +96,18 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private auth: Auth,
     private refresherService: RefreshService,
+    private localStorageService:LocalstorageService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    const getUser = await this.localStorageService.getItem('user')
+
+    if(getUser){
+      this.message.info('You are already logged in, please logout first to visit this page');
+      this.router.navigate(['/search']);
+      return
+    }
+    
     if (this.auth.currentUser != null) {
       this.router.navigate(['/search']);
       return;
@@ -105,8 +115,6 @@ export class LoginComponent implements OnInit {
     this.isMobileView = window.innerWidth < 767;
     this.getContactsData();
     this.passwordStrenthChecker();
-    console.log(this.auth);
-
     // this.registrationService.userLogout();
   }
 
@@ -179,13 +187,13 @@ export class LoginComponent implements OnInit {
 
     try {
       this.isLoading = true;
-
       const login = await this.registrationService.userLogin(
         this.loginFormGroup
       );
 
-      console.log(login, this.auth);
       if (login.status === 200) {
+        
+        this.localStorageService.setItem('user', login.data)
         this.signupFormGroup.reset();
         this.isLoading = false;
         this.isSignup = false;

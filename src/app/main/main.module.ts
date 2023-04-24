@@ -17,6 +17,9 @@ import { ImgFooterComponent } from './components/img-footer/img-footer.component
 import { EmptyPageComponent } from '../empty-page/empty-page.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
+import { AuthGuardService as AuthGuard } from '../services/auth/auth-guard.service';
+import { FeaturesPageComponent } from './pages/features-page/features-page.component';
+import { AboutusPageComponent } from './pages/aboutus-page/aboutus-page.component'; 
 
 const routes: Routes = [
   {
@@ -35,9 +38,19 @@ const routes: Routes = [
         path: 'contact',
         component: ContactPageComponent,
       },
+      
+      {
+        path: 'features',
+        component: FeaturesPageComponent,
+      },
+      {
+        path: 'about-us',
+        component: AboutusPageComponent,
+      },
       {
         path: 'details/:id',
         component: DetailsPageComponent,
+        canActivate:[AuthGuard]
       },
       {
         path: '',
@@ -68,6 +81,8 @@ const routes: Routes = [
     ImgFooterComponent,
     ContactFormComponent,
     ContactPageComponent,
+    FeaturesPageComponent,
+    AboutusPageComponent,
   ],
   exports: [TelemedicineInputComponent],
   imports: [
