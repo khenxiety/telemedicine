@@ -7,6 +7,10 @@ import {
 } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { BreadcrumbService } from './services/breadcrumbs.service';
+import { LocalstorageService } from '../services/localstorage/localstorage.service';
+import { UserAuthService } from '../services/registration.service';
+
+import { NzMessageService } from 'ng-zorro-antd/message';
 interface RouteData {
   [key: string]: any;
   isScrolling: boolean;
@@ -28,7 +32,10 @@ export class AdminComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     private elementRef: ElementRef,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private localStorageService:LocalstorageService,
+    private message:NzMessageService,
+    private auth:UserAuthService
   ) {
     this.breadcrumbService.getTitle().subscribe((title: any) => {
       this.breadcrumbsTitle = title;
@@ -62,12 +69,25 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.isMobileView = window.innerWidth < 767;
+    const userData =await this.localStorageService.getItem('user')
+    if(userData){
+      if(userData.type !=='admin'){
+        this.message.error(`You don't have permission to visit this page, please contact the admin`)
+        this.router.navigate(['/search'])
+      }
+    }
   }
 
-  logout(): void {
-    window.location.href = '/';
+  async logout(){
+    try {
+      await this.auth.userLogout()
+      this.router.navigate(['/login'])
+    } catch (error:any) {
+      this.message.error(error.toString())
+    }
+    
   }
   @HostListener('window: resize', ['$event.target'])
   public onResize(eventTarget: EventTarget): void {

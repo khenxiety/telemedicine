@@ -194,6 +194,17 @@ export class LoginComponent implements OnInit {
       if (login.status === 200) {
         
         this.localStorageService.setItem('user', login.data)
+
+        if(login.data.type ==='admin'){
+          this.signupFormGroup.reset();
+          this.isLoading = false;
+          this.isSignup = false;
+          this.refresherService.refresh.next();
+          this.message.success(`${login.message} as admin`);
+          this.router.navigate(['/admin']);
+          return
+        }
+
         this.signupFormGroup.reset();
         this.isLoading = false;
         this.isSignup = false;

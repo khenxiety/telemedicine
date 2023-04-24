@@ -70,8 +70,12 @@ export class UserAuthService {
 
       const verification = await this.roleVerification(data.value.email);
 
-      if (verification && verification.type === 'user') {
-        return { status: 200, message: 'Login Successfully', data: loginUser };
+      if (verification ) {
+        const data ={
+          type:verification.type,
+          ...loginUser
+        }
+        return { status: 200, message: 'Login Successfully', data: data };
       } else {
         this.userLogout();
         throw { status: 'error', code: 'User does not exist' };
