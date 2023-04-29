@@ -87,13 +87,11 @@ export class TelemedicineHeaderComponent implements OnInit {
         this.isMobileView = false;
       }
     }
-    console.log((<Window>eventTarget).innerWidth);
   }
 
   async ngOnInit() {
     this.isMobileView = window.innerWidth < 767;
     const getUser = await this.localStorageService.getItem('user')
-    console.log(getUser)
     if (getUser) {
       this.setIsUserLoggedIn();
     } else {
@@ -171,6 +169,10 @@ export class TelemedicineHeaderComponent implements OnInit {
   }
 
   async menuAction(action: string){
+    window.scroll({
+      top:0
+    })
+    
     if (action === 'logout') {
       try {
         const logout = await this.authenticationService.userLogout();
@@ -182,6 +184,7 @@ export class TelemedicineHeaderComponent implements OnInit {
       }
       return;
     }
+    
 
     this.router.navigate([action]);
   }

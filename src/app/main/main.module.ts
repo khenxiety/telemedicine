@@ -53,6 +53,11 @@ const routes: Routes = [
         canActivate:[AuthGuard]
       },
       {
+        path: 'details',
+        component: DetailsPageComponent,
+        canActivate:[AuthGuard]
+      },
+      {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full',

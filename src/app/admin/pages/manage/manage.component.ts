@@ -106,9 +106,10 @@ export class ManageComponent implements OnInit {
           address: `${data.location.street.number} ${data.location.street.name}, ${data.location.city} `,
           age: data.dob.age,
           birthdate: this.datePipe.transform(data.dob.date , 'dd/MM/yyyy hh:mm a'),
-          bloodPressure: '23/2',
+          breathRate: '23/2',
           contactNumber: data.phone,
-          date: data.registered.date,
+          registrationDate: data.registered.date,
+          ecg:'',
           gender: data.gender,
           heartRate: 23,
           height: 34,
@@ -117,7 +118,8 @@ export class ManageComponent implements OnInit {
           oxygenSaturation: 'bohai2',
           temperature: 34,
           weight: 34,
-          lastModified:''
+          lastModified:'',
+          date:new Date(data.registered.date).toISOString().slice(0,10)
         })
       } )
       this.addMockData();
@@ -303,5 +305,67 @@ export class ManageComponent implements OnInit {
       }
     }
     console.log((<Window>eventTarget).innerWidth);
+  }
+
+  test(){
+    const model = {
+      address:'test',
+      age: 'test',
+      birthdate: 'test',
+      breathRate: 'test',
+      contactNumber: 'test',
+      registrationDate: 'test',
+      ecg: 'test',
+      gender: 'test',
+      heartRate: 'test',
+      height: 'test',
+      image: 'test',
+      name: 'test',
+      oxygenSaturation: 'test',
+      temperature: 'test',
+      weight: 'test',
+      lastModified: 'test',
+      date: 'test',
+    }
+    const model2 = {
+      name: 'test',
+      address:'test',
+      age: 'test',
+      records:[
+        {
+          birthdate: 'test',
+          breathRate: 'test',
+          contactNumber: 'test',
+          registrationDate: 'test',
+          ecg: 'test',
+          gender: 'test',
+          heartRate: 'test',
+          height: 'test',
+          image: 'test',
+          oxygenSaturation: 'test',
+          temperature: 'test',
+          weight: 'test',
+          lastModified: 'test',
+          date: 'test',
+        },
+        {
+          birthdate: 'test',
+          breathRate: 'test',
+          contactNumber: 'test',
+          registrationDate: 'test',
+          ecg: 'test',
+          gender: 'test',
+          heartRate: 'test',
+          height: 'test',
+          image: 'test',
+          oxygenSaturation: 'test',
+          temperature: 'test',
+          weight: 'test',
+          lastModified: 'test',
+          date: 'test',
+        },
+      ]
+      
+    }
   }
 }

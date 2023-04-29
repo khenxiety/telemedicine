@@ -5,6 +5,7 @@ import { getISOWeek } from 'date-fns';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Helper } from 'src/app/helpers/helper.helper';
 @Component({
   selector: 'app-details-page',
   templateUrl: './details-page.component.html',
@@ -12,9 +13,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class DetailsPageComponent implements OnInit {
   public activeData: string = '';
-  public data: any;
-  date = null;
+  public patientData: any[] =[];
+  // date = null;
   isEnglish = false;
+
+  public isLoading:boolean = false
+
+  dateFormat = 'yyyy/MM/dd';
+  date:any[]=[] || null
 
   public formGroup: FormGroup = new FormGroup({
     search : new FormControl('', Validators.required)
@@ -44,7 +50,7 @@ export class DetailsPageComponent implements OnInit {
           throw new Error(res.message)
         }
 
-        this.data = res.data;
+        this.patientData.push(res.data);
       });
     
   }
@@ -62,12 +68,38 @@ export class DetailsPageComponent implements OnInit {
         this.message.error(`No record found for ${this.formGroup.get('search')?.value}` )
         return
       }
-      this.data = res.data[Object.keys(res.data)[0]];
+      this.patientData = res.data[Object.keys(res.data)[0]];
     })
   }
 
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
+  onChange(result: any): void {
+    this.date = result;
+    console.log('onChange: ', Helper.dateFormatter(this.date[0]),Helper.dateFormatter(this.date[1]));
+    if(!Helper.dateFormatter(this.date[1]).includes('NaN')){
+      console.log('test')
+      this.filterByDateRange()
+    }
+  }
+
+  filterByDateRange() {
+    if (this.date) {
+      this.isLoading = true;
+      this.firebaseService
+        .getDataByDateRange(
+          Helper.dateFormatter(this.date[0]),
+          Helper.dateFormatter(this.date[1])
+        )
+        .subscribe((res) => {
+          console.log(res)
+
+          this.patientData = Helper.toArrayObjects(res)
+          // this.telemedicineTable?.ngOnInit()
+          this.isLoading = false;
+
+        });
+    } else {
+      this.message.info('Please select a date')
+    }
   }
 
   getWeek(result: Date): void {
