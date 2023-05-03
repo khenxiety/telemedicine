@@ -13,25 +13,29 @@ export class FeaturesPageComponent implements OnInit {
       title:'PULSE OXIMETER',
       description:'measures the saturation of oxygen carried in your red blood cells',
       image:'assets/oximeter.png',
-      link:''
+      link:'',
+      use:['Position your index finger inside the device', 'Let the kit measure the oxygen saturation of the patient and wait until the process is over']
     },
     {
       title:'GUN THERMOMETER',
-      description:'measures the saturation of oxygen carried in your red blood cells',
+      description:'measures temperature from a distance without touching the surface being measured',
       image:'assets/gun thermo.png',
-      link:''
+      link:'',
+      use:['Put the thermometer close to the spot where temperature will be taken, like wrists or forehead','Keep a 5 cm space between the two, ideally','Gently press the trigger to take a temperature reading as indicated on the LCD panel','Let the kit measure the temperature of the patient and wait until the process is over']
     },
     {
       title:'ELECTROCARDIODIAGRAM',
-      description:'measures the saturation of oxygen carried in your red blood cells',
+      description:'records the electrical activity of the heart',
       image:'assets/cardiodiagram.png',
-      link:''
+      link:'',
+      use:['Make sure the patient is laying down comfortably','Place the red electrode to the patient’s right chest/arm, yellow electrode to left chest/arm, and the last electrode to the patient’s right waist/thigh, as shown in the image','Let the kit measure the electrical activity of the heart and wait until the process is over']
     },
     {
-      title:'SPHYGMOMANOMETER',
-      description:'measures the saturation of oxygen carried in your red blood cells',
+      title:'PNUEMOGRAPH',
+      description:'measure the movement of air in and out of the lungs',
       image:'assets/sphygmoma.png',
-      link:''
+      link:'',
+      use:['Make sure the patient is comfortable','Gently place the respiratory belt on the patient’s stomach, tying it tightly','Let the kit measure the breathing rate of the patient and wait until  the process is over']
     }
   ]
 

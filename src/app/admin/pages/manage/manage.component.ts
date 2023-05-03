@@ -134,58 +134,35 @@ export class ManageComponent implements OnInit {
     })
   }
 
-  // get pageNumbers():number[]{
-
-  //   return Array(Math.ceil(this.data.length / this.pageSize)).fill(0).map((x,i) =>i + 1) 
-  // }
-
-  // public changePage(page:number, action:string):void{
-  //   if(action ==='number'){
-  //     this.selectedPage = page
-
-  //     return
-  //   }
-
-  //   if(action ==='number'){
-  //     this.selectedPage += page
-
-  //     return
-  //   }
-
-  //   if(action ==='number'){
-  //     this.selectedPage += page
-
-  //     return
-  //   }
-  // }
-
-  // public slicedData():void{
-
-  //   const pageIndex = (this.selectedPage -1) * this.pageSize
-  //   const endIndex = (this.selectedPage -1) * this.pageSize + this.pageSize
-  //   this.newDataList=[]
-  //   this.newDataList=this.data.slice(pageIndex, endIndex)
-
-
-  // }
-
   loadData(reload?: boolean) {
     this.isLoading = true;
-    const check = sessionStorage.getItem(SessionStorage.Data);
-    if (check && !reload) {
-      this.data = JSON.parse(check);
-      this.setColumns(this.data);
-      this.isLoading = false;
-    } else {
-      this.firebaseService.getDataRealtime().subscribe((res) => {
+    // const check = localStorage.getItem(SessionStorage.Data);
+    // if (check && !reload) {
+    //   this.data = JSON.parse(check);
+    //   this.setColumns(this.data);
+    //   this.isLoading = false;
+    // } else {
+    //   this.firebaseService.getDataRealtime().subscribe((res) => {
+    //     this.data = Helper.toArrayObjects(res);
+    //     localStorage.setItem(SessionStorage.Data, JSON.stringify(this.data));
+    //     this.setColumns(this.data);
+    //     setTimeout(() => {
+    //       this.isLoading = false;
+    //     }, 500);
+    //   });
+    // }
+    this.firebaseService.getDataRealtime().subscribe({
+      next:(res) =>{
         this.data = Helper.toArrayObjects(res);
-        sessionStorage.setItem(SessionStorage.Data, JSON.stringify(this.data));
         this.setColumns(this.data);
         setTimeout(() => {
           this.isLoading = false;
         }, 500);
-      });
-    }
+      },
+      error:(error)=>{
+        console.error(error)
+      }
+    });
   }
 
   setColumns(data: any) {

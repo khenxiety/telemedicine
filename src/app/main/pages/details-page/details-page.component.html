@@ -1,19 +1,15 @@
-<div class="page-wrapper">
+<div class="page-wrapper mb-4">
   <div class="container">
-    <div class="row pt-5" *ngFor="let data of patientData; let i = index"> <!-- to loop-->
+    <div class="row pt-5" *ngFor="let data of patientData; let i = index">
       <div class="col-lg-8">
         <div class="container-header" *ngIf="i ===0">
           <div class="mb-4">
             <h1 class="header-text h1-responsive font-color-primary" style="font-weight: 600;">PATIENT <span class="font-color-secondary">DETAILS</span> </h1>
           </div>
-          <div class="mb-5">
+          <!-- <div class="mb-5">
             <div class="date-picker-container">
               <div class="date-picker">
-                <!-- <nz-date-picker
-                style="min-width: 300px; border-radius:10px; height: 45px;"
-                [(ngModel)]="date"
-                (ngModelChange)="onChange($event)"
-              ></nz-date-picker> -->
+              
                 <nz-range-picker
                 (nzOnCalendarChange)="onChange($event)"
                 nz-tooltip
@@ -24,7 +20,7 @@
               </div>
               
             </div>
-          </div>
+          </div> -->
         </div>
 
         <div class="details-cards pt-3">
@@ -50,9 +46,9 @@
             <div class="col-lg-3 col-md-3 col-sm-3">
               <app-telemedicine-detail-cards
                 [imgURL]="'./assets/blood.png'"
-                [data]="data?.bloodPressure"
+                [data]="data?.breathRate"
                 [filled]="true"
-                [description]="'Blood Pressure'"
+                [description]="'Breath Rate'"
                 [isWideCard]="false"
               ></app-telemedicine-detail-cards>
             </div>
@@ -68,19 +64,35 @@
           </div>
           <div class="row mb-5">
             <div class="col">
-              <app-telemedicine-detail-cards
+              <div class="col-12">
+                <app-telemedicine-detail-cards
                 [imgURL]="'./assets/heartECG.jpg'"
                 [data]="data?.temperature"
                 [filled]="false"
                 [description]="'Heart ECG'"
                 [isWideCard]="true"
               ></app-telemedicine-detail-cards>
+              </div>
+              
             </div>
+          </div>
+
+          <div class="row mb-5">
+            <nz-carousel [nzEffect]="effect">
+              <div nz-carousel-content *ngFor="let index of imageUrl">
+                <img [src]="index" onmousedown="return false" alt="" style="user-select: none;">
+              </div>
+            </nz-carousel>
           </div>
 
           <div class="row">
             <div class="col">
-              <button nz-button nzType="primary">Print Summary</button>
+              <div class="date-picker-container">
+                <div class="date-picker">
+                  <button nz-button nzType="primary">Print Summary</button>
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -115,7 +127,9 @@
           <div class="col">
             <div class="patient-details p-3 align-items-center p-4">
               <div class="mb-3 header-image">
-                <img [src]="data ? data.image :'./assets/logo.png'" height="auto" width="150" alt="" />
+                <!-- <img [src]="data   ? './assets/user.png' :'./assets/user.png'" height="auto" width="150" alt="" /> -->
+                <img [src]="imageUrl && patientData.length == 1 ? imageUrl[0] :'./assets/user.png'" height="auto" width="150" alt="" />
+
               </div>
               <div class="details-container">
                 <div class="mb-5">

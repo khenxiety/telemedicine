@@ -4,10 +4,10 @@
   *ngIf="!isWideCard"
 >
   <div class="row details">
-    <div class="col">
+    <div class="col-6">
       <img [src]="imgURL" height="60" width="60" alt="" />
     </div>
-    <div class="col">
+    <div class="col-6">
       <strong [ngClass]="filled ? 'details-text text-white' : 'details-text'">{{
         data
       }}</strong>

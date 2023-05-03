@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Helper } from 'src/app/helpers/helper.helper';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-details-page',
   templateUrl: './details-page.component.html',
@@ -16,22 +17,23 @@ export class DetailsPageComponent implements OnInit {
   public patientData: any[] =[];
   // date = null;
   isEnglish = false;
-
   public isLoading:boolean = false
-
   dateFormat = 'yyyy/MM/dd';
   date:any[]=[] || null
+  imageUrl: any[]=[]
+  safeImageUrl!: SafeUrl;
+  array = [1, 2, 3, 4];
+  effect = 'scrollx';
 
   public formGroup: FormGroup = new FormGroup({
     search : new FormControl('', Validators.required)
   })
-
-
   constructor(
     private firebaseService: FirebaseService,
     private i18n: NzI18nService,
     private activatedRoute:ActivatedRoute,
-    private message:NzMessageService
+    private message:NzMessageService,
+    private sanitizer: DomSanitizer
   ) {
 
     this.activatedRoute.params.subscribe((res) => {
@@ -45,36 +47,51 @@ export class DetailsPageComponent implements OnInit {
     this.firebaseService
       .getSingleDataSnapshot(this.activeData)
       .subscribe((res) => {
-
         if(!res.data){
           throw new Error(res.message)
         }
-
         this.patientData.push(res.data);
+        if(Array.isArray(res.data.image)){
+          this.convertToImage(this.patientData[0])
+          return
+        }else{
+          this.imageUrl.push(res.data.image)
+        }
       });
     
   }
 
   onSearch():void{
-    console.log(this.formGroup.get('search')?.value)
     if(!this.formGroup.valid){
       this.message.error('Please enter patient name')
       return
     }
+    this.firebaseService.getDataByName(this.formGroup.get('search')?.value).subscribe({
+      next:(res) =>{
+        if(!res.data){
+          this.message.error(`No record found for ${this.formGroup.get('search')?.value}` )
+          return
+        }
+        this.patientData = []
+        this.imageUrl = []
 
-    this.firebaseService.getDataByName(this.formGroup.get('search')?.value).subscribe(res =>{
-      console.log(res.data)
-      if(!res.data){
-        this.message.error(`No record found for ${this.formGroup.get('search')?.value}` )
-        return
+        this.patientData.push(res.data[Object.keys(res.data)[0]]);
+        if(Array.isArray(res.data[Object.keys(res.data)[0]].image)){
+          this.convertToImage(this.patientData[0])
+          return
+        }else{
+          this.imageUrl.push(res.data.image)
+        }
+
+      },
+      error:(error) =>{
+        this.message.error(error)
       }
-      this.patientData = res.data[Object.keys(res.data)[0]];
     })
   }
 
   onChange(result: any): void {
     this.date = result;
-    console.log('onChange: ', Helper.dateFormatter(this.date[0]),Helper.dateFormatter(this.date[1]));
     if(!Helper.dateFormatter(this.date[1]).includes('NaN')){
       console.log('test')
       this.filterByDateRange()
@@ -90,8 +107,6 @@ export class DetailsPageComponent implements OnInit {
           Helper.dateFormatter(this.date[1])
         )
         .subscribe((res) => {
-          console.log(res)
-
           this.patientData = Helper.toArrayObjects(res)
           // this.telemedicineTable?.ngOnInit()
           this.isLoading = false;
@@ -109,5 +124,22 @@ export class DetailsPageComponent implements OnInit {
   changeLanguage(): void {
     this.i18n.setLocale(this.isEnglish ? zh_CN : en_US);
     this.isEnglish = !this.isEnglish;
+  }
+
+  convertToImage(data:any){
+    data.image.forEach((res:any) => {
+      const byteCharacters = atob(res);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray]);
+      const url = URL.createObjectURL(blob);
+
+      this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(url));
+    });
+
+    
   }
 }
