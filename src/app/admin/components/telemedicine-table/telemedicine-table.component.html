@@ -1,17 +1,10 @@
 <nz-spin [nzSpinning]="isSpinning">
-  <nz-table #filterTable [nzData]="dataItems" nzTableLayout="fixed">
+  <nz-table #filterTable [nzData]="dataItems" nzTableLayout="fixed" *ngIf="isManageData">
     <thead>
       <tr>
-        <th
-          style="user-select: none"
-          *ngFor="let column of listOfColumns"
-          [nzSortOrder]="column.sortOrder"
-          [nzSortFn]="column.sortFn"
-          [nzSortDirections]="column.sortDirections"
-          [nzFilterMultiple]="column.filterMultiple"
-          [nzFilters]="column.listOfFilter"
-          [nzFilterFn]="column.filterFn"
-        >
+        <th style="user-select: none" *ngFor="let column of listOfColumns" [nzSortOrder]="column.sortOrder"
+          [nzSortFn]="column.sortFn" [nzSortDirections]="column.sortDirections"
+          [nzFilterMultiple]="column.filterMultiple" [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn">
           {{ column?.name }}
         </th>
       </tr>
@@ -35,32 +28,64 @@
               <span nz-icon nzType="info-circle" nzTheme="fill" *ngIf="isMobileView"></span>
               <span *ngIf="!isMobileView">View</span> 
             </a> -->
-            <a
-              class="font-color-primary disable-user-select me-3"
-              (click)="emitActions({ action: 'update', id: data?.id })"
-            >
-              <span
-                nz-icon
-                nzType="edit"
-                nzTheme="fill"
-                *ngIf="isMobileView"
-              ></span>
+            <a class="font-color-primary disable-user-select me-3"
+              (click)="emitActions({ action: 'update', id: data?.id })">
+              <span nz-icon nzType="edit" nzTheme="fill" *ngIf="isMobileView"></span>
               <span *ngIf="!isMobileView">View</span>
             </a>
-            <a
-              class="font-color-primary disable-user-select"
-              nz-popconfirm
-              nzPopconfirmTitle="Are you sure delete this data?"
-              nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="emitActions({ action: 'delete', id: data?.id })"
-              (nzOnCancel)="cancel()"
-            >
-              <span
-                nz-icon
-                nzType="delete"
-                nzTheme="fill"
-                *ngIf="isMobileView"
-              ></span>
+            <a class="font-color-primary disable-user-select" nz-popconfirm
+              nzPopconfirmTitle="Are you sure delete this data?" nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="emitActions({ action: 'delete', id: data?.id })" (nzOnCancel)="cancel()">
+              <span nz-icon nzType="delete" nzTheme="fill" *ngIf="isMobileView"></span>
+              <span *ngIf="!isMobileView">Delete</span>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <nz-table #filterTable [nzData]="dataItems" nzTableLayout="fixed" *ngIf="isManageAccount">
+    <thead>
+      <tr>
+        <th style="user-select: none" *ngFor="let column of listOfColumns" [nzSortOrder]="column.sortOrder"
+          [nzSortFn]="column.sortFn" [nzSortDirections]="column.sortDirections"
+          [nzFilterMultiple]="column.filterMultiple" [nzFilters]="column.listOfFilter" [nzFilterFn]="column.filterFn">
+          {{ column?.name }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of dataItems">
+        <td nzEllipsis>
+          <p nz-typography nzCopyable [nzCopyText]="data?.firstName">
+            {{ data?.firstName ? data?.firstName +' '+data?.lastName : "-" }}
+          </p>
+        </td>
+        <td nzEllipsis>
+          <p nz-typography>{{ data?.email ? data?.email : "-" }}</p>
+        </td>
+        <td nzEllipsis>
+          <p nz-typography>{{ data?.type ? data?.type : "-" }}</p>
+        </td>
+        <td nzRight>
+          <div class="action-buttons d-flex">
+         
+            <a class="font-color-primary disable-user-select me-3"
+              (click)="openModal(data)">
+              <span nz-icon nzType="edit" nzTheme="fill" *ngIf="isMobileView"></span>
+              <span *ngIf="!isMobileView">View</span>
+            </a>
+            <a class="font-color-primary disable-user-select me-3"
+              *ngIf="data.status != 'approved'"
+              (click)="emitActions({ action: 'account-approve', id: data })">
+              <span nz-icon nzType="edit" nzTheme="fill" *ngIf="isMobileView"></span>
+              <span *ngIf="!isMobileView">Approve</span>
+            </a>
+            <a class="font-color-primary disable-user-select" nz-popconfirm
+              nzPopconfirmTitle="Are you sure delete this data?" nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="emitActions({ action: 'delete', id: data?.id })" (nzOnCancel)="cancel()">
+              <span nz-icon nzType="delete" nzTheme="fill" *ngIf="isMobileView"></span>
               <span *ngIf="!isMobileView">Delete</span>
             </a>
           </div>

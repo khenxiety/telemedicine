@@ -24,8 +24,8 @@
 </nz-card>
 
 <nz-card class="shadow round border-grn w-100" *ngIf="isWideCard">
-  <strong class="description-text">{{ description }}</strong>
-  <div class="card-image">
+  <!-- <strong class="description-text">{{ description }}</strong> -->
+  <!-- <div class="card-image">
     <img
       [src]="imgURL"
       height="auto"
@@ -33,5 +33,8 @@
       style="object-fit: cover"
       alt=""
     />
-  </div>
+  </div> -->
+  <app-ecg-graph [ecg]="heartEcg" [date]="dataDate"></app-ecg-graph>
 </nz-card>
+
+

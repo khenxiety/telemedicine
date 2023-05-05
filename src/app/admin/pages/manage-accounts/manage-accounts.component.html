@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <header >
+      <div class="row">
+        <div class="col-12">
+          <h2 nz-typography class="h2-responsive font-color-primary mb-0">
+            Manage Accounts
+          </h2>
+        </div>
+      </div>
+
+    </header>
+
+    <div class="row mt-5">
+        <div class="col-12 table-content">
+            <app-telemedicine-table
+              *ngIf="data.length != 0"
+              [dataItems]="data"
+              [isManageAccount]="true"
+              [isSpinning]="isLoading"
+              [listOfColumns]="listOfColumns"
+              (actions)="onClickActions($event)"
+            ></app-telemedicine-table>
+      
+            
+          </div>
+    </div>
+</div>

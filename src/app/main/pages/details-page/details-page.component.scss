@@ -64,11 +64,14 @@
 }
 [nz-carousel-content] {
   text-align: center;
-  height: 290px;
+  height: 400px;
   line-height: 160px;
   background: #dddddd;
   color: #fff;
   overflow: hidden;
+  img{
+    width: 100%;
+  }
 }
 
 h3 {

@@ -38,10 +38,24 @@ export class FeaturesPageComponent implements OnInit {
       use:['Make sure the patient is comfortable','Gently place the respiratory belt on the patient’s stomach, tying it tightly','Let the kit measure the breathing rate of the patient and wait until  the process is over']
     }
   ]
+  isVisible = false;
+
+  modalsData:any
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  showModal(data:any): void {
+    this.isVisible = true;
+    this.modalsData = data
+    console.log(this.modalsData)
+  }
+  close(){
+    this.modalsData={}
+    this.isVisible = false;
+
   }
 
 }

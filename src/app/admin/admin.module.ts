@@ -11,6 +11,7 @@ import { ManageComponent } from './pages/manage/manage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactInformationPageComponent } from './pages/contact-information-page/contact-information-page.component';
 import { UpdatePageComponent } from './pages/update-page/update-page.component';
+import { ManageAccountsComponent } from './pages/manage-accounts/manage-accounts.component';
 
 const route: Routes = [
   {
@@ -28,6 +29,10 @@ const route: Routes = [
       {
         path: 'manage/update-data/:id',
         component: UpdatePageComponent,
+      },
+      {
+        path: 'manage-accounts',
+        component: ManageAccountsComponent,
       },
       // cms
       {
@@ -52,6 +57,7 @@ const route: Routes = [
     ManageComponent,
     ContactInformationPageComponent,
     UpdatePageComponent,
+    ManageAccountsComponent,
   ],
   imports: [
     CommonModule,

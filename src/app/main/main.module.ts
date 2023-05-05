@@ -19,8 +19,10 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
 import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 import { AuthGuardService as AuthGuard } from '../services/auth/auth-guard.service';
 import { FeaturesPageComponent } from './pages/features-page/features-page.component';
-import { AboutusPageComponent } from './pages/aboutus-page/aboutus-page.component'; 
-
+import { AboutusPageComponent } from './pages/aboutus-page/aboutus-page.component';
+import { EcgGraphComponent } from './components/graphs/ecg-graph/ecg-graph.component'; 
+import * as CanvasJSAngularChart from 'src/assets/charts/canvasjs.angular.component';
+var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 const routes: Routes = [
   {
     path: '',
@@ -88,6 +90,7 @@ const routes: Routes = [
     ContactPageComponent,
     FeaturesPageComponent,
     AboutusPageComponent,
+    EcgGraphComponent,CanvasJSChart
   ],
   exports: [TelemedicineInputComponent],
   imports: [

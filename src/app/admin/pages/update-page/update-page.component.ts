@@ -114,7 +114,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
       address: new FormControl(data.address || '', [Validators.required]),
       age: new FormControl(data.age || '', [Validators.required]),
       birthdate: new FormControl(data.birthdate || '', [Validators.required]),
-      bloodPressure: new FormControl(data.bloodPressure || '', [
+      breathRate: new FormControl(data.breathRate || '', [
         Validators.required,
       ]),
       contactNumber: new FormControl(data.contactNumber || '', [

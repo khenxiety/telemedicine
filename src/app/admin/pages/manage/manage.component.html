@@ -80,6 +80,7 @@
       <app-telemedicine-table
         *ngIf="tableView && data.length != 0"
         [dataItems]="data"
+        [isManageData]="true"
         [isSpinning]="isLoading"
         [listOfColumns]="listOfColumns"
         (actions)="onClickActions($event)"

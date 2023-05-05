@@ -27,6 +27,7 @@ import { MainModule } from './main/main.module';
 import { EmptyPageComponent } from './empty-page/empty-page.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+
 registerLocaleData(en);
 export function tokenGetter() {
   const {user:{stsTokenManager:{ accessToken:token}}} = JSON.parse(localStorage.getItem('user')!);

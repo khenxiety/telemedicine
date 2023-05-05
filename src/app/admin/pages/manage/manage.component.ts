@@ -83,7 +83,7 @@ export class ManageComponent implements OnInit {
 
     this.breadcrumbsService.setTitle({
       relative: 'Dashboard',
-      page: 'Manage',
+      page: 'Manage Patients',
     });
     this.loadData();
     // this.route.data.subscribe((res) => {
@@ -284,65 +284,4 @@ export class ManageComponent implements OnInit {
     console.log((<Window>eventTarget).innerWidth);
   }
 
-  test(){
-    const model = {
-      address:'test',
-      age: 'test',
-      birthdate: 'test',
-      breathRate: 'test',
-      contactNumber: 'test',
-      registrationDate: 'test',
-      ecg: 'test',
-      gender: 'test',
-      heartRate: 'test',
-      height: 'test',
-      image: 'test',
-      name: 'test',
-      oxygenSaturation: 'test',
-      temperature: 'test',
-      weight: 'test',
-      lastModified: 'test',
-      date: 'test',
-    }
-    const model2 = {
-      name: 'test',
-      address:'test',
-      age: 'test',
-      records:[
-        {
-          birthdate: 'test',
-          breathRate: 'test',
-          contactNumber: 'test',
-          registrationDate: 'test',
-          ecg: 'test',
-          gender: 'test',
-          heartRate: 'test',
-          height: 'test',
-          image: 'test',
-          oxygenSaturation: 'test',
-          temperature: 'test',
-          weight: 'test',
-          lastModified: 'test',
-          date: 'test',
-        },
-        {
-          birthdate: 'test',
-          breathRate: 'test',
-          contactNumber: 'test',
-          registrationDate: 'test',
-          ecg: 'test',
-          gender: 'test',
-          heartRate: 'test',
-          height: 'test',
-          image: 'test',
-          oxygenSaturation: 'test',
-          temperature: 'test',
-          weight: 'test',
-          lastModified: 'test',
-          date: 'test',
-        },
-      ]
-      
-    }
-  }
 }

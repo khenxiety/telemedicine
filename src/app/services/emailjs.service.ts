@@ -28,4 +28,23 @@ export class EmailjsService {
 
     
   }
+
+  async sendEmailAccountApproval(email:any):Promise<any>{
+    try {
+      const emailSend:EmailJSResponseStatus = await emailjs.send(
+        environment.emailJs.serviceId,
+        'template_zk1l41c',
+        email, 
+        'Vujdp2W2SPh44s_tj')
+
+      return emailSend
+      
+    } catch (error) {
+      console.error(error)
+      return error
+    }finally{}
+
+
+    
+  }
 }

@@ -11,8 +11,16 @@ export class TelemedicineDetailCardsComponent implements OnInit {
   @Input() description: string = '';
   @Input() filled: boolean = false;
   @Input() isWideCard: boolean = false;
+  @Input() heartEcg:any
+  @Input() dataDate:any
+
 
   constructor() {}
 
-  ngOnInit(): void {}
+  async ngOnInit() {
+
+    
+  }
+  
+  
 }

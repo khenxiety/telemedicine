@@ -92,10 +92,10 @@
           </div>
           <div class="mb-4">
             <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"
-              [controlName]="'bloodPressure'" [errorMessage]="'Field cannot be empty'" [label]="'Blood Pressure'"
+              [controlName]="'breathRate'" [errorMessage]="'Field cannot be empty'" [label]="'Breath Rate'"
               [type]="'text'" [isRound]="true" [disabled]="!isUpdating"></app-telemedicine-admin-input>
-            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Blood Pressure :</strong>
-              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('bloodPressure')?.value">{{updateFormGroup.get('bloodPressure')?.value}}</span></div>
+            <div class="details-item" *ngIf="!isUpdating"> <strong class="me-4">Breath Rate :</strong>
+              <span nz-typography nzCopyable [nzCopyText]="updateFormGroup.get('breathRate')?.value">{{updateFormGroup.get('breathRate')?.value}}</span></div>
           </div>
           <div class="mb-4">
             <app-telemedicine-admin-input [placeholder]="''" *ngIf="isUpdating" [formGroupParent]="updateFormGroup"

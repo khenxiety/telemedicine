@@ -55,7 +55,9 @@ export class DetailsPageComponent implements OnInit {
           this.convertToImage(this.patientData[0])
           return
         }else{
-          this.imageUrl.push(res.data.image)
+          if(res.data.image){
+            this.imageUrl.push(res.data.image)
+          }
         }
       });
     
@@ -80,7 +82,9 @@ export class DetailsPageComponent implements OnInit {
           this.convertToImage(this.patientData[0])
           return
         }else{
-          this.imageUrl.push(res.data.image)
+          if(res.data.image){
+            this.imageUrl.push(res.data.image)
+          }
         }
 
       },

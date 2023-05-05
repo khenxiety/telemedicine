@@ -163,13 +163,13 @@ export class LoginComponent implements OnInit {
 
     try {
       this.isLoading = true;
-      const registration = await this.registrationService.userSignup(
+      const registration = await this.registrationService.addData(
         this.signupFormGroup
       );
       if (registration.status === 200) {
         this.signupFormGroup.reset();
         this.isSignup = false;
-        this.message.success(registration.message);
+        this.message.success("Account registration submitted. An email will be sent to you for your registration request approval.");
       }
     } catch (error: any) {
       console.error(error);

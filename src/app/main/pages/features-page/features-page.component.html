@@ -19,10 +19,31 @@
 
                         <p class="">{{data.description}}</p>
 
-                        <a href="{{data.link}}" class="font-color-secondary ">HOW TO USE</a>
+                        <a (click)="showModal(data)" class="font-color-secondary ">HOW TO USE</a>
                     </div>
                     
                 </div>
+
+                <nz-modal
+                    *ngIf="modalsData"
+                    [(nzVisible)]="isVisible"
+                    [nzTitle]="modalsData.title"
+                    [nzContent]="modalContent"
+                    [nzFooter]="modalFooter"
+                    (nzOnCancel)="close()"
+                    >
+                    <ng-template #modalTitle>{{modalsData.title}}</ng-template>
+
+                    <ng-template #modalContent>
+                        <h4>How to use</h4>
+                        <p *ngFor="let use of modalsData.use; let i = index"> {{i+1}}. {{use}}</p>
+                        
+                    </ng-template>
+
+                    <ng-template #modalFooter>
+                        <button nz-button nzType="default" (click)="close()">Close</button>
+                    </ng-template>
+                    </nz-modal>
             </div>
             
         </div>

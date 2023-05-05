@@ -88,6 +88,39 @@ export class FirebaseService {
     });
   }
 
+  getAccountsRealtime(): Observable<any> {
+    const dbInstance = ref(this.db, 'users/');
+    return new Observable((observer) => {
+      const unsubscribe = onValue(
+        dbInstance,
+        (snapshot) => {
+          if (snapshot.exists()) {
+            observer.next({
+              status: 200,
+              message: 'success',
+              data: snapshot.val(),
+            });
+          } else {
+            observer.next({
+              status: 400,
+              message: 'No data available',
+              data: undefined,
+            });
+          }
+        },
+        (error) => {
+          console.error(error);
+          observer.next({
+            status: 400,
+            message: 'Error',
+            data: error,
+          });
+        }
+      );
+      return unsubscribe;
+    });
+  }
+
   getSingleDataSnapshot(id: string): Observable<any> {
     const dbInstance = ref(this.db, `data/-${id}`);
 

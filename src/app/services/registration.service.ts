@@ -13,6 +13,7 @@ import {
   query,
   push,
   equalTo,
+  update,
 } from '@angular/fire/database';
 import { from, Observable } from 'rxjs';
 import { LocalstorageService } from './localstorage/localstorage.service';
@@ -26,13 +27,13 @@ export class UserAuthService {
     try {
       const createUser = await createUserWithEmailAndPassword(
         this.authService,
-        data.value.email,
-        data.value.password
+        data.email,
+        data.password
       );
       await updateProfile(createUser.user, {
-        displayName: data.value.firstName,
+        displayName: data.firstName,
       });
-      const addData = await this.addData(data, createUser.user.uid);
+      const addData = await this.updateAccountApproved(data, createUser.user.uid);
       return Promise.resolve({
         status: 200,
         message: 'Registration Successfull',
@@ -43,21 +44,32 @@ export class UserAuthService {
     }
   }
 
-  async addData(data: any, uid: string): Promise<any> {
+  async addData(data: any): Promise<any> {
     try {
       const reg = {
         ...data.value,
         type: 'user',
-        userId: uid,
+        status:'pending',
       };
 
       const dbInstance = ref(this.db, 'users/');
       const res = await push(dbInstance, reg);
-      return res;
+      return Promise.resolve({
+        status: 200,
+        message: 'Registration Successfull',
+      });
     } catch (err) {
       console.error(err);
       throw err;
     }
+  }
+
+  updateAccountApproved(data: any,uid:any): Promise<void> {
+    const dbInstance = ref(this.db, `users/${data.id}`);
+    const modifiedData = { status:'approved', uid:uid };
+    return update(dbInstance, modifiedData).catch((err) => {
+      return Promise.reject(err);
+    });
   }
 
   async userLogin(data: any): Promise<any> {
