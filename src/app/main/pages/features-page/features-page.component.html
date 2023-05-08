@@ -35,6 +35,7 @@
                     <ng-template #modalTitle>{{modalsData.title}}</ng-template>
 
                     <ng-template #modalContent>
+                        <!-- <img src="{{modalsData?.image}}" alt=""> -->
                         <h4>How to use</h4>
                         <p *ngFor="let use of modalsData.use; let i = index"> {{i+1}}. {{use}}</p>
                         

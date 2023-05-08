@@ -86,7 +86,7 @@
             </div>
 
             <div class="mb-2" *ngFor="let sign of signupArray; let i = index">
-              <nz-form-item [ngClass]="i == 5 && signupFormGroup.get('password')?.valid ? 'mb-0' :''">
+              <nz-form-item [ngClass]="i == 4 && signupFormGroup.get('password')?.valid ? 'mb-0' :''">
                 <nz-form-control  [nzErrorTip]="sign.errorTip">
                   <nz-input-group [nzPrefixIcon]="sign.icon">
                     <input
@@ -100,7 +100,7 @@
                   </nz-input-group>
                 </nz-form-control>
               </nz-form-item>
-              <div class="progressPassword mt-1" *ngIf="i ==5 && signupFormGroup.get('password')?.valid">
+              <div class="progressPassword mt-1" *ngIf="i ==4 && signupFormGroup.get('password')?.valid">
                 <span style="font-weight: 600; font-size: 13px;" nz-typography [nzType]="textClass.split('|')[1]">
                   {{progressText}}
 

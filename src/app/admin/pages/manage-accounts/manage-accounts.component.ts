@@ -122,6 +122,9 @@ export class ManageAccountsComponent implements OnInit {
       case 'account-approve':
         this.accountApproved(event.id)
         break;
+      case 'delete':
+        window.location.href = 'https://console.firebase.google.com/u/0/project/telemedicine-3ca8d/authentication/users'
+        break;
     }
   }
 

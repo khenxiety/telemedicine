@@ -75,6 +75,7 @@
               (click)="openModal(data)">
               <span nz-icon nzType="edit" nzTheme="fill" *ngIf="isMobileView"></span>
               <span *ngIf="!isMobileView">View</span>
+              
             </a>
             <a class="font-color-primary disable-user-select me-3"
               *ngIf="data.status != 'approved'"
@@ -88,9 +89,48 @@
               <span nz-icon nzType="delete" nzTheme="fill" *ngIf="isMobileView"></span>
               <span *ngIf="!isMobileView">Delete</span>
             </a>
+
+           
           </div>
         </td>
       </tr>
     </tbody>
+    <nz-modal
+    [(nzVisible)]="isVisible"
+    [nzTitle]="modalsData?.firstName"
+    [nzContent]="modalContent"
+    [nzFooter]="modalFooter"
+    (nzOnCancel)="close()"
+    >
+    <ng-template #modalTitle>{{modalsData?.firstName + ' '+ modalsData?.lastName}}</ng-template>
+
+    <ng-template #modalContent>
+        <p class="modal-text"><span class="font-weight-bold">Firstname:</span>
+          {{modalsData?.firstName}}
+        </p>
+        <p class="modal-text"><span class="font-weight-bold">Lastname:</span>
+          {{modalsData?.lastName}}
+        </p>
+        <p class="modal-text"><span class="font-weight-bold">Contact Number:</span>
+         {{ modalsData?.number}}
+        </p>
+        <p class="modal-text"><span class="font-weight-bold">Email:</span>
+         {{ modalsData?.email}}
+        </p>
+        <p class="modal-text"><span class="font-weight-bold">Type:</span>
+          {{modalsData?.type}}
+        </p>
+        <p class="modal-text"><span class="font-weight-bold">Status:</span>
+          {{modalsData?.status}}
+        </p>
+        
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="close()">Close</button>
+        <button *ngIf="modalsData?.status ==='pending'" nz-button nzType="primary" (click)="emitActions({ action: 'account-approve', id: modalsData })">Approve</button>
+
+    </ng-template>
+    </nz-modal>
   </nz-table>
 </nz-spin>

@@ -180,7 +180,7 @@ export class LoginComponent implements OnInit {
   }
 
   async userLogin() {
-    if (!this.loginFormGroup.valid) {
+    if (!this.loginFormGroup) {
       this.message.error('Please fill up all the fields');
       return;
     }
@@ -194,9 +194,9 @@ export class LoginComponent implements OnInit {
       if (login.status === 200) {
         
         this.localStorageService.setItem('user', login.data)
+        this.loginFormGroup.reset();
 
         if(login.data.type ==='admin'){
-          this.signupFormGroup.reset();
           this.isLoading = false;
           this.isSignup = false;
           this.refresherService.refresh.next();
@@ -205,7 +205,6 @@ export class LoginComponent implements OnInit {
           return
         }
 
-        this.signupFormGroup.reset();
         this.isLoading = false;
         this.isSignup = false;
         this.refresherService.refresh.next();

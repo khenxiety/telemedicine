@@ -44,6 +44,8 @@ export class TelemedicineTableComponent implements OnInit {
 
   public isMobileView:boolean = false
 
+  public modalsData:any
+  public isVisible:boolean = false
 
   constructor() {}
 
@@ -61,7 +63,9 @@ export class TelemedicineTableComponent implements OnInit {
   cancel() {}
 
   openModal(data:any){
+    this.isVisible = true
     console.log(data)
+    this.modalsData = data
   }
 
   @HostListener('window: resize', ['$event.target'])
@@ -76,5 +80,10 @@ export class TelemedicineTableComponent implements OnInit {
         this.isMobileView = false;
       }
     }
+  }
+
+  close(){
+
+    this.isVisible = false
   }
 }
