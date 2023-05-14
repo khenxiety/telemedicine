@@ -33,7 +33,7 @@
       <div class="row mt-3 ">
         <div class="col-12">
           <div class="image">
-            <img nz-image [nzSrc]="patientData ? patientData?.image : 'assets/user.png'" alt="">
+            <img [src]="imageUrl.length !== 0 ? imageUrl[0] : 'assets/user.png'" alt="">
           </div>
         </div>
       </div>

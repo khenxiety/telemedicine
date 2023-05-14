@@ -17,6 +17,7 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Location } from '@angular/common';
 import { SessionStorage } from 'src/app/enums/enums';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-update-page',
   templateUrl: './update-page.component.html',
@@ -48,6 +49,8 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
 
   @Output() isBackButtonOn: any = new EventEmitter<boolean>();
 
+
+  public imageUrl:any =[]
   constructor(
     private breadcrumbsService: BreadcrumbService,
     private router: Router,
@@ -55,7 +58,8 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
     private firebaseService: FirebaseService,
     private message: NzMessageService,
     private httpClient:HttpClient,
-    private location:Location
+    private location:Location,
+    private sanitizer:DomSanitizer
   ) {}
 
   async ngOnInit() {
@@ -96,6 +100,7 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if(response.data){
           this.patientData = response.data; 
+          this.convertToImage(response.data)
           this.buildFormData(this.patientData);
           this.isLoading = false;
         }
@@ -205,5 +210,22 @@ export class UpdatePageComponent implements OnInit, OnDestroy {
     } catch (error) {
       throw error
     }
+  }
+
+  convertToImage(data:any){
+    data.image.forEach((res:any) => {
+      const byteCharacters = atob(res);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray]);
+      const url = URL.createObjectURL(blob);
+
+      this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(url));
+    });
+
+    
   }
 }

@@ -17,11 +17,11 @@ export class FeaturesPageComponent implements OnInit {
       use:['Position your index finger inside the device', 'Let the kit measure the oxygen saturation of the patient and wait until the process is over']
     },
     {
-      title:'GUN THERMOMETER',
+      title:'INFRARED THERMOMETER',
       description:'measures temperature from a distance without touching the surface being measured',
       image:'assets/gun thermo.png',
       link:'',
-      use:['Put the thermometer close to the spot where temperature will be taken, like wrists or forehead','Keep a 5 cm space between the two, ideally','Gently press the trigger to take a temperature reading as indicated on the LCD panel','Let the kit measure the temperature of the patient and wait until the process is over']
+      use:['Put the thermometer close to the spot where temperature will be taken, like wrists or forehead','Keep a 5 cm space between the two, ideally','Let the kit measure the temperature of the patient and wait until the process is over']
     },
     {
       title:'ELECTROCARDIODIAGRAM',

@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { SessionStorage } from 'src/app/enums/enums';
+import { DomSanitizer } from '@angular/platform-browser';
 interface ColumnItem {
   name: string;
   sortOrder: NzTableSortOrder | null;
@@ -64,6 +65,7 @@ export class ManageComponent implements OnInit {
 
   public testData:any[]=[]
   public isMobileView: boolean = false;
+  public imageUrl:any[]=[]
 
 
   constructor(
@@ -72,7 +74,8 @@ export class ManageComponent implements OnInit {
     private breadcrumbsService: BreadcrumbService,
     private router: Router,
     private httpClient:HttpClient,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private sanitizer: DomSanitizer
   ) { }
 
   async ngOnInit() {

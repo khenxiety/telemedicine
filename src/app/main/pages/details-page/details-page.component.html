@@ -39,7 +39,7 @@
                 [imgURL]="'./assets/heart.png'"
                 [data]="data?.heartRate"
                 [filled]="false"
-                [description]="'Heart Rate'"
+                [description]="'Pulse Rate'"
                 [isWideCard]="false"
               ></app-telemedicine-detail-cards>
             </div>
@@ -91,7 +91,7 @@
             
           </div>
 
-          <div class="row">
+          <!-- <div class="row">
             <div class="col">
               <div class="date-picker-container">
                 <div class="date-picker">
@@ -100,7 +100,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-lg-4">
@@ -172,13 +172,13 @@
                 <div class="mb-5">
                   <h5 class="text-white text-capitalize">
                     <small class="me-3">Height: </small
-                    > <span nz-icon [nzType]="'loading'" *ngIf="!data?.height"></span> {{ data?.height ? data?.height : "" }}
+                    > <span nz-icon [nzType]="'loading'" *ngIf="!data?.height"></span> {{ data?.height ? data?.height : "" }} ft
                   </h5>
                 </div>
                 <div class="mb-5">
                   <h5 class="text-white text-capitalize">
                     <small class="me-3">Weight: </small
-                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.weight"></span>{{ data?.weight ? data?.weight : "" }}
+                    ><span nz-icon [nzType]="'loading'" *ngIf="!data?.weight"></span>{{ data?.weight ? data?.weight : "" }} kg
                   </h5>
                 </div>
               </div>
